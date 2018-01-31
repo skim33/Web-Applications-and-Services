@@ -10,7 +10,7 @@ var app = express();
 
 app.use(express.static('public')); 
 
-app.createServer(function(req, res) {
+http.createServer(app, function(req, res) {
    
     if (req.url == '/home' || req.url == '/') {
         fs.readFile('./views/home.html', 'UTF-8', function(err, data){
