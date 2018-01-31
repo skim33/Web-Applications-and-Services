@@ -34,7 +34,7 @@ app.get("/managers", function(req, res) {
         data = JSON.parse(data);
         for (var i in data) {
             if (data[i].isManager == true) {
-                res.json(data[i]);
+                res.send(data[i]);
             }
         }
     })
