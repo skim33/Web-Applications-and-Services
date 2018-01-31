@@ -30,11 +30,14 @@ app.get("/employees", function(req, res) {
 })
 
 app.get("/managers", function(req, res) {
-    for (var i = 0; i < employees.length; i++) {
-        if (employees[i].isManager == true) {
-            res.json(employees[i]).end();
+    fs.readFile('./data/employees.json', 'utf8', function(err, data) {
+        data = JSON.parse(data);
+        for (var i = 0; i < data.length; i++) {
+            if (data.isManager == true) {
+                res.json(data[i]);
+            }
         }
-    }
+    })
 })
 
 app.get("/managers", function(req, res) {
