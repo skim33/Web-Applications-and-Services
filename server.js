@@ -8,14 +8,14 @@ var app = express();
 app.use(express.static('public')); 
 
 app.get("/", function(req, res) {
-    fs.readFile('/views/home.html', 'UTF-8', function(err, data){
+    fs.readFile('./views/home.html', 'UTF-8', function(err, data){
         res.writeHead(200, { 'Content-Type': 'text/html'});
         res.end(data);
     });
 });
 
 app.get("/about", function(req, res) {
-    fs.readFile('/views/about.html', 'UTF-8', function(err, data){
+    fs.readFile('./views/about.html', 'UTF-8', function(err, data){
         res.writeHead(200, { 'Content-Type': 'text/html'});
         res.end(data);
     });
