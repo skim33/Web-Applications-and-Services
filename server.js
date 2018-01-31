@@ -7,12 +7,12 @@ var app = express();
 app.use(express.static('public')); 
 
 app.get("/", function(req, res) {
-    res.File("views/home.html", "text/html");
+    res.sendfile("views/home.html", "text/html");
     res.end();
 });
 
 app.get("/about", function(req, res) {
-    res.File("views/about.html", "text/html");
+    res.sendfile("views/about.html", "text/html");
     res.end();
 });
 
