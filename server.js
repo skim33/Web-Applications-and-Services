@@ -8,8 +8,6 @@ var app = express();
 
 app.use(express.static('public')); 
 
-var url_parts = url.parse(req.url);
-
 app.get("/", function(req, res) {
     fs.readFile('./views/home.html', 'UTF-8', function(err, data){
         res.writeHead(200, { 'Content-Type': 'text/html'});
