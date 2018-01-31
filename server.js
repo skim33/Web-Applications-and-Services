@@ -32,9 +32,10 @@ app.get("/managers", function(req, res) {
     for (var i = 0; i < employees.length; i++) {
         if (employees[i].isManager == true) {
             res.json(employees[i]);
-            res.end();
+            continue;
         }
     }
+    res.end();
 })
 
 app.get("/managers", function(req, res) {
