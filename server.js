@@ -26,23 +26,28 @@ app.get("/employees", function(req, res) {
     fs.readFile('./data/employees.json', 'utf8', function(err, data) {
         data = JSON.parse(data);
         res.json(data);
-    })
-})
+        res.end();
+    });
+});
 
 app.get("/managers", function(req, res) {
     fs.readFile('./data/employees.json', 'utf8', function(err, data) {
         data = JSON.parse(data);
+        var obj = {};
         for (var i in data) {
             if (data[i].isManager == true) {
-                res.send(data[i]);
+                obj.push(data[i]);
             }
         }
-    })
-})
+
+        res.json(obj);
+        res.end();
+    });
+});
 
 app.get("/managers", function(req, res) {
     res.send("TODO: get all employees who have isManager==true");
-})
+});
 
 function onhttpstart(){
     console.log('Express http server listening on: ' + HTTP_PORT);
