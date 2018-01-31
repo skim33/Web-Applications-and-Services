@@ -3,6 +3,7 @@ var fs = require("fs");
 var data_service = require("./data-service");
 var url = require('url');
 var http = require('http');
+var sys = require('sys');
 
 var HTTP_PORT = process.env.PORT || 8080;
 
