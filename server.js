@@ -22,6 +22,10 @@ app.get("/about", function(req, res) {
     });
 });
 
+app.get("/managers", function(req, res) {
+    res.send("TODO: get all employees who have isManager==true");
+})
+
 function onhttpstart(){
     console.log('Express http server listening on: ' + HTTP_PORT);
 };
