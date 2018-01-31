@@ -45,9 +45,19 @@ app.get("/managers", function(req, res) {
     });
 });
 
-app.get("/managers", function(req, res) {
-    res.send("TODO: get all employees who have isManager==true");
+app.get("/departments", function(req, res) {
+    fs.readFile('./data/departments.json', 'utf8', function(err, data) {
+        data = JSON.parse(data);
+        res.json(data);
+        res.end();
+    });
 });
+
+app.get('/:type!(home|about|employees|managers)', function(req, res) {
+    res.status(404);
+    res.send("Page Not Found");
+    res.end();
+})
 
 function onhttpstart(){
     console.log('Express http server listening on: ' + HTTP_PORT);
