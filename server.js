@@ -1,6 +1,6 @@
 var express = require("express");
 var fs = require("fs");
-var data_service = require("data-service.js");
+var data_service = require("data-service");
 
 var HTTP_PORT = process.env.PORT || 8080;
 
