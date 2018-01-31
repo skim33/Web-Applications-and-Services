@@ -10,7 +10,7 @@ var app = express();
 
 app.use(express.static('public')); 
 
-express.createServer(function(req, res) {
+http.createServer(function(req, res) {
    
     if (req.url == '/home' || req.url == '/') {
         fs.readFile('./views/home.html', 'UTF-8', function(err, data){
@@ -50,7 +50,7 @@ express.createServer(function(req, res) {
     } else {
         res.send("AAA");
     }
-})
+}).listen(8080);
 
 function onhttpstart(){
     console.log('Express http server listening on: ' + HTTP_PORT);
