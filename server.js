@@ -29,12 +29,7 @@ app.get("/employees", function(req, res) {
 })
 
 app.get("/managers", function(req, res) {
-    var sent = false;
-    for (var i = 0; i < employees.length; i++) {
-        if (employees[i].isManager == true) {
-            console.log(employees[i]);
-        }
-    }
+    res.json({isManage: true});
     res.end();
 })
 
