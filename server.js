@@ -11,8 +11,10 @@ var app = express();
 app.use(express.static('public')); 
 
 http.createServer(function(req, res) {
+    var url_parts = url.parse(req.url);
+    console.log(url_parts);
 
-    switch(req.url) {
+    switch(url_parts.pathname) {
         case '/':
             fs.readFile('./views/home.html', 'UTF-8', function(err, data){
                 res.writeHead(200, { 'Content-Type': 'text/html'});
