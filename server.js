@@ -7,13 +7,17 @@ var app = express();
 app.use(express.static('public')); 
 
 app.get("/", function(req, res) {
-    res.sendFile("/views/home.html", "text/html");
-    res.end();
+    express.readFile('/views/home.html', 'UTF-8', function(err, data){
+        res.writeHead(200, { 'Content-Type': 'text/html'});
+        res.end();
+    });
 });
 
 app.get("/about", function(req, res) {
-    res.sendFile("/views/about.html", "text/html");
-    res.end();
+    express.readFile('/views/about.html', 'UTF-8', function(err, data){
+        res.writeHead(200, { 'Content-Type': 'text/html'});
+        res.end();
+    });
 });
 
 function onhttpstart(){
