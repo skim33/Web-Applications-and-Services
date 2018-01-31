@@ -58,7 +58,7 @@ switch(url_parts.pathname) {
         break;
     
     default:
-        return;
+        res.send("AAAA");
 }
 
 function onhttpstart(){
