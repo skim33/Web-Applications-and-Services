@@ -32,11 +32,10 @@ app.get("/employees", function(req, res) {
 app.get("/managers", function(req, res) {
     fs.readFile('./data/employees.json', 'utf8', function(err, data) {
         data = JSON.parse(data);
-        for (var i = 0; i < data.length; i++) {
+        for (var i in data) {
             if (data[i].isManager == true) {
                 res.json(data[i]);
             }
-            continue;
         }
     })
 })
