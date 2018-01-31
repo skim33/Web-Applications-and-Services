@@ -53,7 +53,7 @@ app.get("/departments", function(req, res) {
     });
 });
 
-app.get('/:name(!(about)|!(employees)|!(managers)|!(departments))?', function(req, res) {
+app.get('/:name!(about|employees|managers|departments)?', function(req, res) {
     res.status(404);
     res.send("Page Not Found");
     res.end();
