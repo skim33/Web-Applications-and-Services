@@ -34,7 +34,6 @@ app.get("/managers", function(req, res) {
             res.json(employees[i]);
         }
     }
-    res.end();
 })
 
 app.get("/managers", function(req, res) {
