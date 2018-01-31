@@ -1,7 +1,6 @@
 var express = require("express");
 var fs = require("fs");
 var data_service = require("./data-service");
-var employees = JSON.parse(fs.readFileSync('./data/employees.json', 'utf8'));
 
 var HTTP_PORT = process.env.PORT || 8080;
 
@@ -24,8 +23,10 @@ app.get("/about", function(req, res) {
 });
 
 app.get("/employees", function(req, res) {
-    res.json(employees);
-    res.end();
+    fs.readFile('./data/employees.json', 'utf8', function(err, data) {
+        data = JSON.parse(data);
+        res.json(data);
+    })
 })
 
 app.get("/managers", function(req, res) {
