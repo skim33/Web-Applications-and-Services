@@ -36,6 +36,7 @@ app.get("/managers", function(req, res) {
             if (data[i].isManager == true) {
                 res.json(data[i]);
             }
+            continue;
         }
     })
 })
