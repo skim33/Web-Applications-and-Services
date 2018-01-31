@@ -12,7 +12,7 @@ app.use(express.static('public'));
 
 http.createServer(function(req, res) {
     var url_parts = url.parse(req.url);
-    console.log(url_parts);
+    console.log(url_parts.pathname);
 
     switch(url_parts.pathname) {
         case '/':
