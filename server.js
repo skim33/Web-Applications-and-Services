@@ -11,57 +11,44 @@ var app = express();
 app.use(express.static('public')); 
 
 http.createServer(function(req, res) {
-    var url_parts = url.parse(req.url);
-    console.log(url_parts.pathname);
-
-    switch(url_parts.pathname) {
-        case '/':
-            fs.readFile('./views/home.html', 'UTF-8', function(err, data){
-                res.writeHead(200, { 'Content-Type': 'text/html'});
-                res.end(data);
-            });
-            break;
-        
-        case '/about':
-            fs.readFile('./views/about.html', 'UTF-8', function(err, data){
-                res.writeHead(200, { 'Content-Type': 'text/html'});
-                res.end(data);
-            });
-            break;
-        
-        case '/employees':
-            fs.readFile('./data/employees.json', 'utf8', function(err, data) {
-                data = JSON.parse(data);
-                res.json(data);
-                res.end();
-            });
-            break;
-        
-        case '/managers':
-            fs.readFile('./data/employees.json', 'utf8', function(err, data) {
-                data = JSON.parse(data);
-                var obj = [];
-                for (var i in data) {
-                    if (data[i].isManager == true) {
-                        obj.push(data[i]);
-                    }
+   
+    if (req.url == '/home' || req.url == '/') {
+        fs.readFile('./views/home.html', 'UTF-8', function(err, data){
+            res.writeHead(200, { 'Content-Type': 'text/html'});
+            res.end(data);
+        });
+    } else if (req.url == '/about'){
+        fs.readFile('./views/about.html', 'UTF-8', function(err, data){
+            res.writeHead(200, { 'Content-Type': 'text/html'});
+            res.end(data);
+        });
+    } else if (req.url == '/employees') {
+        fs.readFile('./data/employees.json', 'utf8', function(err, data) {
+            data = JSON.parse(data);
+            res.json(data);
+            res.end();
+        });
+    } else if (req.url == '/managers') {
+        fs.readFile('./data/employees.json', 'utf8', function(err, data) {
+            data = JSON.parse(data);
+            var obj = [];
+            for (var i in data) {
+                if (data[i].isManager == true) {
+                    obj.push(data[i]);
                 }
-    
-                res.json(obj);
-                res.end();
-            });
-            break;
-        
-        case '/departments':
-            fs.readFile('./data/departments.json', 'utf8', function(err, data) {
-                data = JSON.parse(data);
-                res.json(data);
-                res.end();
-            });
-            break;
-        
-        default:
-            res.send("AAA");
+            }
+
+            res.json(obj);
+            res.end();
+        });
+    } else if (req.url == '/departments') {
+        fs.readFile('./data/departments.json', 'utf8', function(err, data) {
+            data = JSON.parse(data);
+            res.json(data);
+            res.end();
+        });
+    } else {
+        res.send("AAA");
     }
 })
 
