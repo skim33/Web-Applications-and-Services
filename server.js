@@ -33,7 +33,7 @@ app.get("/employees", function(req, res) {
 app.get("/managers", function(req, res) {
     fs.readFile('./data/employees.json', 'utf8', function(err, data) {
         data = JSON.parse(data);
-        var obj = {};
+        var obj = [];
         for (var i in data) {
             if (data[i].isManager == true) {
                 obj.push(data[i]);
