@@ -1,6 +1,6 @@
 var express = require("express");
-var fs = require("fs");
-var data_service = require("./data-service");
+var path = require("path");
+var data_service = require("./data-service.js");
 
 var HTTP_PORT = process.env.PORT || 8080;
 
@@ -9,17 +9,11 @@ var app = express();
 app.use(express.static('public')); 
 
 app.get("/", function(req, res) {
-    fs.readFile('./views/home.html', 'UTF-8', function(err, data){
-        res.writeHead(200, { 'Content-Type': 'text/html'});
-        res.end(data);
-    });
+    res.sendFile(path.join(__dirname + "/views/home.html"));
 });
 
 app.get("/about", function(req, res) {
-    fs.readFile('./views/about.html', 'UTF-8', function(err, data){
-        res.writeHead(200, { 'Content-Type': 'text/html'});
-        res.end(data);
-    });
+    res.sendFile(path.join(__dirname + "/views/about.html"));
 });
 
 app.get("/employees", function(req, res) {
@@ -53,11 +47,7 @@ app.get("/departments", function(req, res) {
     });
 });
 
-app.get('/!about|employees|managers|departments', function(req, res) {
-    res.status(404);
-    res.send("Page Not Found");
-    res.end();
-})
+
 
 function onhttpstart(){
     console.log('Express http server listening on: ' + HTTP_PORT);
