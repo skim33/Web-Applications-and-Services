@@ -10,11 +10,11 @@ app.use(express.static('public'));
 
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname + "/views/home.html"));
-});
+})
 
 app.get("/about", function(req, res) {
     res.sendFile(path.join(__dirname + "/views/about.html"));
-});
+})
 
 app.get("/employees", function(req, res) {
     fs.readFile('./data/employees.json', 'utf8', function(err, data) {
@@ -22,7 +22,7 @@ app.get("/employees", function(req, res) {
         res.json(data);
         res.end();
     });
-});
+})
 
 app.get("/managers", function(req, res) {
     fs.readFile('./data/employees.json', 'utf8', function(err, data) {
@@ -37,7 +37,7 @@ app.get("/managers", function(req, res) {
         res.json(obj);
         res.end();
     });
-});
+})
 
 app.get("/departments", function(req, res) {
     fs.readFile('./data/departments.json', 'utf8', function(err, data) {
@@ -45,12 +45,14 @@ app.get("/departments", function(req, res) {
         res.json(data);
         res.end();
     });
-});
-
-
+})
 
 function onhttpstart(){
     console.log('Express http server listening on: ' + HTTP_PORT);
-};
+}
+
+app.use(function(req, res) {
+    res.status(404).send("Page Not Found");
+})
 
 app.listen(HTTP_PORT, onhttpstart);
