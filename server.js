@@ -18,8 +18,8 @@ app.get("/about", function(req, res) {
 
 app.get("/employees", function(req, res) {
     data_service.getAllEmployees().then(function(data){
-        res.jason(data);
-    }).catch(function(err){
+        res.json(data);
+    }).catch(function(err) {
         res.jason({message: err});
     });
 })
