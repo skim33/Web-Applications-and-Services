@@ -10,6 +10,7 @@
  * 
  ***************************************************************************************************/ 
 
+//include modules
 var express = require("express");
 var path = require("path");
 var data_service = require("./data-service.js");
@@ -18,16 +19,20 @@ var HTTP_PORT = process.env.PORT || 8080;
 
 var app = express();
 
+//return the "css/site.css" file
 app.use(express.static('public')); 
 
+//set up the default '/' route to respond to the following get request 
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname + "/views/home.html"));
 })
 
+//set up the '/about' route to respond to the following get request
 app.get("/about", function(req, res) {
     res.sendFile(path.join(__dirname + "/views/about.html"));
 })
 
+//set up the '/employees' route to respond to the following get request
 app.get("/employees", function(req, res) {
     data_service.getAllEmployees().then(function(data){
         res.json(data);
@@ -36,6 +41,7 @@ app.get("/employees", function(req, res) {
     });
 })
 
+//set up the '/managers' route to respond to the following get request
 app.get("/managers", function(req, res) {
     data_service.getManagers().then(function(data){
         res.json(data);
@@ -44,6 +50,7 @@ app.get("/managers", function(req, res) {
     });
 })
 
+//set up the '/departments' route to respond to the following get request
 app.get("/departments", function(req, res) {
     data_service.getDepartments().then(function(data){
         res.json(data);

@@ -1,5 +1,7 @@
+//include module
 var fs = require("fs");
 
+//global array declaration
 var employees = [];
 var departments = [];
 
