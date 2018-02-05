@@ -10,14 +10,13 @@ module.exports.initialize = function() {
                 reject("Can not read the employees.json file");
             } else {
                 employees = JSON.parse(data);
-                resolve("Successfully read the employees.json file");
 
                 fs.readFile("./data/departments.json", function(err, data){
                     if (err) {
                         reject("Can not read the departments.json file");
                     } else {
                         departments = JSON.parse(data);
-                        resolve("Successfully read the departments.json file");
+                        resolve("Successfully read the json files");
                     }
                 });
             }
