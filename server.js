@@ -17,42 +17,38 @@ app.get("/about", function(req, res) {
 })
 
 app.get("/employees", function(req, res) {
-    fs.readFile('./data/employees.json', 'utf8', function(err, data) {
-        data = JSON.parse(data);
-        res.json(data);
-        res.end();
+    data_service.getAllEmployees().then(function(data){
+        res.jason(data);
+    }).catch(function(err){
+        res.jason({message: err});
     });
 })
 
 app.get("/managers", function(req, res) {
-    fs.readFile('./data/employees.json', 'utf8', function(err, data) {
-        data = JSON.parse(data);
-        var obj = [];
-        for (var i in data) {
-            if (data[i].isManager == true) {
-                obj.push(data[i]);
-            }
-        }
-
-        res.json(obj);
-        res.end();
+    data_service.getManagers().then(function(data){
+        res.json(data);
+    }).catch(function(err) {
+        res.json({message: err});
     });
 })
 
 app.get("/departments", function(req, res) {
-    fs.readFile('./data/departments.json', 'utf8', function(err, data) {
-        data = JSON.parse(data);
+    data_service.getDepartments().then(function(data){
         res.json(data);
-        res.end();
+    }).catch(function(err){
+        res.json({message: err});
     });
 })
-
-function onhttpstart(){
-    console.log('Express http server listening on: ' + HTTP_PORT);
-}
 
 app.use(function(req, res) {
     res.status(404).send("Page Not Found");
 })
 
-app.listen(HTTP_PORT, onhttpstart);
+app.listen(HTTP_PORT, function(res, req) {
+    console.log('Express http server listening on: ' + HTTP_PORT);
+    data_service.initialize().then(function(data){
+        console.log(data);
+    }).catch(function(err){
+        console.log(err);
+    });
+});
