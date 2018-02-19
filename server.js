@@ -34,7 +34,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});
 
 //return the "css/site.css" file
-app.use(express.static('public')); 
+app.use(express.static("./public/")); 
 
 //set up the default '/' route to respond to the following get request 
 app.get("/", function(req, res) {
@@ -86,14 +86,10 @@ app.post("/images/add", upload.single("imageFile"), function(req, res) {
 });
 
 app.get("/images", function(req, res) {
-    fs.readdir(p, function (err, items){
-        images.push(items);
+    fs.readdir(dir, function (err, items){
+        const formData = req.file;
 
-        var someData = {
-            images: images
-        };
-
-        res.json(someData.toString());
+        res.json(JSON.stringify(formData));
     });
 });
 
