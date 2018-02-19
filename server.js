@@ -19,9 +19,9 @@ var fs = require("fs");
 
 var HTTP_PORT = process.env.PORT || 8080;
 
-var dir = express();
+var app = express();
 
-var path = process.argv[2];
+var dir = process.argv[2];
 
 const storage = multer.diskStorage({
     destination: "./public/images/uploaded",
