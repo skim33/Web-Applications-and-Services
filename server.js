@@ -19,7 +19,7 @@ var fs = require("fs");
 
 var HTTP_PORT = process.env.PORT || 8080;
 
-var app = express();
+var dir = express();
 
 var path = process.argv[2];
 
@@ -85,7 +85,7 @@ app.post("/images/add", upload.single("imageFile"), function(req, res) {
 });
 
 app.get("/images", function(req, res) {
-    fs.readdir(path, function (err, items){
+    fs.readdir(dir, function (err, items){
         res.json(items);
     });
 });
