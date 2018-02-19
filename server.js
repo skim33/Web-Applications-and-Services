@@ -16,6 +16,7 @@ var path = require("path");
 var data_service = require("./data-service.js");
 var multer = require("multer");
 var fs = require("fs");
+var bodyParser = require("body-parser");
 var images = [];
 
 var HTTP_PORT = process.env.PORT || 8080;
@@ -34,7 +35,8 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});
 
 //return the "css/site.css" file
-app.use(express.static("./public/")); 
+app.use(express.static("./public/"));
+app.use(bodyParser.urlencoded({ extended: true}));
 
 //set up the default '/' route to respond to the following get request 
 app.get("/", function(req, res) {
@@ -87,9 +89,13 @@ app.post("/images/add", upload.single("imageFile"), function(req, res) {
 
 app.get("/images", function(req, res) {
     fs.readdir(dir, function (err, items){
-        const formData = req.file;
+        images.push(items);
 
-        res.json(JSON.stringify(formData));
+        var someData = {
+            images: images
+        };
+
+        res.json(JSON.stringify(someData));
     });
 });
 
