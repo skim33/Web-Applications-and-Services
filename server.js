@@ -84,17 +84,16 @@ app.get("/images/add", function(req, res) {
 });
 
 app.post("/images/add", upload.single("imageFile"), function(req, res) {
+    images.push(req.body);
     res.redirect("/images");
 });
 
 app.get("/images", function(req, res) {
     fs.readdir(dir, function (err, items){
-        images.push(items);
-
         var someData = {
             images: images
         };
-        
+
         res.json(someData);
     });
 });
