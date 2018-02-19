@@ -85,7 +85,7 @@ app.post("/images/add", upload.single("imageFile"), function(req, res) {
 });
 
 app.get("/images", fs.readdir(dir, function (err, items){
-        res.json(items);
+    res.json(items);
 }));
 
 app.use(function(req, res) {
