@@ -98,6 +98,11 @@ app.get("/images", function(req, res) {
     });
 });
 
+app.post("/employees/add", function(req, res) {
+    data.addEmployee(req.body);
+    res.redirect("/employees");
+});
+
 app.use(function(req, res) {
     res.status(404).send("Page Not Found");
 });

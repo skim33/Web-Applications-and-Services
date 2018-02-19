@@ -33,7 +33,7 @@ module.exports.getAllEmployees = function() {
         } else {
             resolve(employees);
         }
-    })
+    });
 }
 
 module.exports.getManagers = function() {
@@ -59,5 +59,21 @@ module.exports.getDepartments = function() {
         } else {
             resolve(departments);
         }
-    })
+    });
+}
+
+module.exports.addEmployee = function(employeeData) {
+    return new Promise(function(resolve, reject) {
+        if (employeeData.isManager == undefined) {
+            employeeData.isManager == false;
+        } else {
+            employeeData.isManager == true;
+        }
+
+        employeeData.employeeNum = employees.length + 1;
+
+        employees.push(employeeData);
+
+        resolve(employees);
+    });
 }
