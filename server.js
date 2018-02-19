@@ -17,6 +17,7 @@ var data_service = require("./data-service.js");
 var multer = require("multer");
 var fs = require("fs");
 var bodyParser = require("body-parser");
+var images = [];
 
 var HTTP_PORT = process.env.PORT || 8080;
 
@@ -86,9 +87,17 @@ app.post("/images/add", upload.single("imageFile"), function(req, res) {
     res.redirect("/images");
 });
 
-app.get("/images", fs.readdir(dir, function (err, items){
-        res.json(items);
-}));
+app.get("/images", function(req, res) {
+    fs.readdir(dir, function (err, items){
+        images.push(items);
+
+        var someData = {
+            images: images
+        };
+
+        res.json(JSON.stringify(someData));
+    });
+});
 
 app.use(function(req, res) {
     res.status(404).send("Page Not Found");
