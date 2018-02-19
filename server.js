@@ -25,6 +25,13 @@ const upload = multer({storage: storage});
 
 var path = process.argv[2];
 
+const storage = multer.diskStorage({
+    destination: "./public/images/uploaded",
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
 //return the "css/site.css" file
 app.use(express.static('public')); 
 
@@ -77,6 +84,12 @@ app.post("/images/add", upload.single("imageFile"), function(req, res) {
     res.redirect("/images");
 });
 
+app.get("/images", function(req, res) {
+    fs.readdir(path, function (err, items){
+        res.json(items);
+    });
+});
+
 app.use(function(req, res) {
     res.status(404).send("Page Not Found");
 });
@@ -90,9 +103,3 @@ app.listen(HTTP_PORT, function(res, req) {
     });
 });
 
-const storage = multer.diskStorage({
-    destination: "./public/images/uploaded",
-    filename: function(req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
