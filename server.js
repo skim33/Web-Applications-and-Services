@@ -84,11 +84,9 @@ app.post("/images/add", upload.single("imageFile"), function(req, res) {
     res.redirect("/images");
 });
 
-app.get("/images", function(req, res) {
-    fs.readdir(dir, function (err, items){
+app.get("/images", fs.readdir(dir, function (err, items){
         res.json(items);
-    });
-});
+}));
 
 app.use(function(req, res) {
     res.status(404).send("Page Not Found");
