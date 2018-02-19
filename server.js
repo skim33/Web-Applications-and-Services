@@ -93,7 +93,7 @@ app.get("/images", function(req, res) {
             images: images
         };
 
-        res.json(someData);
+        res.json(someData.toString());
     });
 });
 
