@@ -21,8 +21,6 @@ var HTTP_PORT = process.env.PORT || 8080;
 
 var app = express();
 
-const upload = multer({storage: storage});
-
 var path = process.argv[2];
 
 const storage = multer.diskStorage({
@@ -31,6 +29,8 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });
+
+const upload = multer({storage: storage});
 
 //return the "css/site.css" file
 app.use(express.static('public')); 
