@@ -99,7 +99,7 @@ app.get("/images", function(req, res) {
 });
 
 app.post("/employees/add", function(req, res) {
-    data.addEmployee(req.body);
+    addEmployee(req.body);
     res.redirect("/employees");
 });
 
