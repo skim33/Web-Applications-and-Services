@@ -14,6 +14,8 @@
 var express = require("express");
 var path = require("path");
 var data_service = require("./data-service.js");
+var multer = require("multer");
+var fs = require("fs");
 
 var HTTP_PORT = process.env.PORT || 8080;
 
@@ -25,12 +27,12 @@ app.use(express.static('public'));
 //set up the default '/' route to respond to the following get request 
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname + "/views/home.html"));
-})
+});
 
 //set up the '/about' route to respond to the following get request
 app.get("/about", function(req, res) {
     res.sendFile(path.join(__dirname + "/views/about.html"));
-})
+});
 
 //set up the '/employees' route to respond to the following get request
 app.get("/employees", function(req, res) {
@@ -39,7 +41,7 @@ app.get("/employees", function(req, res) {
     }).catch(function(err) {
         res.jason({message: err});
     });
-})
+});
 
 //set up the '/managers' route to respond to the following get request
 app.get("/managers", function(req, res) {
@@ -48,7 +50,7 @@ app.get("/managers", function(req, res) {
     }).catch(function(err) {
         res.json({message: err});
     });
-})
+});
 
 //set up the '/departments' route to respond to the following get request
 app.get("/departments", function(req, res) {
@@ -57,19 +59,27 @@ app.get("/departments", function(req, res) {
     }).catch(function(err){
         res.json({message: err});
     });
-})
+});
 
 app.get("/employees/add", function(req, res) {
     res.sendFile(path.join(__dirname + "/views/addEmployee.html"));
-})
+});
 
 app.get("/images/add", function(req, res) {
     res.sendFile(path.join(__dirname + "/views/addImage.html"));
-})
+});
+
+app.post("/images/add", upload.single("imageFile"), function(req, res) {
+    res.redirect("/images");
+});
+
+app.get("/images", fs.readdir(path, function(err, items) {
+    res.jason(items);
+}));
 
 app.use(function(req, res) {
     res.status(404).send("Page Not Found");
-})
+});
 
 app.listen(HTTP_PORT, function(res, req) {
     console.log('Express http server listening on: ' + HTTP_PORT);
@@ -79,3 +89,12 @@ app.listen(HTTP_PORT, function(res, req) {
         console.log(err);
     });
 });
+
+const storage = multer.diskStorage({
+    destination: "./public/images/uploaded",
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({storage: storage});
