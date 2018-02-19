@@ -21,6 +21,8 @@ var HTTP_PORT = process.env.PORT || 8080;
 
 var app = express();
 
+var path = process.argv[2];
+
 //return the "css/site.css" file
 app.use(express.static('public')); 
 
@@ -73,9 +75,11 @@ app.post("/images/add", upload.single("imageFile"), function(req, res) {
     res.redirect("/images");
 });
 
-app.get("/images", fs.readdir(path, function(err, items) {
-    res.jason(items);
-}));
+app.get("/images", function(req, res) {
+    fs.readdir(path, function (err, items){
+        res.json(items);
+    })
+})
 
 app.use(function(req, res) {
     res.status(404).send("Page Not Found");
