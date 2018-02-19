@@ -90,7 +90,7 @@ app.get("/images", function(req, res) {
         images.push(items);
 
         var someData = {
-            images: items
+            images: images
         };
 
         res.json(someData);
