@@ -94,9 +94,8 @@ app.get("/images", function(req, res) {
         var someData = {
             images: images
         };
-
-        res.json(JSON.stringify(someData));
     });
+    res.json(JSON.stringify(someData));
 });
 
 app.use(function(req, res) {
