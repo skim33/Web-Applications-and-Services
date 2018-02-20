@@ -77,3 +77,71 @@ module.exports.addEmployee = function(employeeData) {
         resolve(employees);
     });
 }
+
+module.exports.getEmployeesByStatus = function(status) {
+    var status_arr = [];
+    return new Promise(function(resolve, reject) {
+        for (var i = 0; i < employees.length; i++) {
+            if (employees[i].status == status) {
+                status_arr.push(employees[i]);
+            }
+        }
+        
+        if (status_arr.length > 0) {
+            resolve(status_arr);
+        } else {
+            reject("no result returned");
+        }
+    });
+}
+
+module.exports.getEmployeesByDepartment = function(department) {
+    var department_arr = [];
+    return new Promise(function(resolve, reject) {
+        for (var i = 0; i < employees.length; i++) {
+            if (employees[i].department == department) {
+                department_arr.push(employees[i]);
+            }
+        }
+        
+        if (department_arr.length > 0) {
+            resolve(department_arr);
+        } else {
+            reject("no result returned");
+        }
+    });
+}
+
+module.exports.getEmployeesByManager = function(manager) {
+    var manager_arr = [];
+    return new Promise(function(resolve, reject) {
+        for (var i = 0; i < employees.length; i++) {
+            if (employees[i].employeeManagerNum == manager) {
+                manager_arr.push(employees[i]);
+            }
+        }
+        
+        if (manager_arr.length > 0) {
+            resolve(manager_arr);
+        } else {
+            reject("no result returned");
+        }
+    });
+}
+
+module.exports.getEmployeesByNum = function(num) {
+    var num_arr = [];
+    return new Promise(function(resolve, reject) {
+        for (var i = 0; i < employees.length; i++) {
+            if (employees[i].employeeNum == num) {
+                num_arr.push(employees[i]);
+            }
+        }
+        
+        if (num_arr.length > 0) {
+            resolve(num_arr.firstName + " " + num_arr.lastName);
+        } else {
+            reject("no result returned");
+        }
+    });
+}

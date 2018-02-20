@@ -50,8 +50,36 @@ app.get("/about", function(req, res) {
 
 //set up the '/employees' route to respond to the following get request
 app.get("/employees", function(req, res) {
-    data_service.getAllEmployees().then(function(data){
-        res.json(data);
+    if(req.query.status) {
+        data_service.getEmployeesByStatus(req.query.status).then(function(list){
+            res.json(list);
+        }).catch(function(err) {
+            res.jason({message: err});
+        });
+    } else if(req.query.department) {
+        data_service.getEmployeesByDepartment(req.query.department).then(function(list){
+            res.json(list);
+        }).catch(function(err) {
+            res.jason({message: err});
+        });
+    } else if(req.query.manager) {
+        data_service.getEmployeesByManager(req.query.manager).then(function(list){
+            res.json(list);
+        }).catch(function(err) {
+            res.jason({message: err});
+        });
+    } else {
+        data_service.getAllEmployees().then(function(list){
+            res.json(list);
+        }).catch(function(err) {
+            res.jason({message: err});
+        });
+    }
+});
+
+app.get("/employee/:num", function(req, res) {
+    data_service.getEmployeeByNum(req.params.num).then(function(list){
+        res.json(list);
     }).catch(function(err) {
         res.jason({message: err});
     });
