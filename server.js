@@ -81,7 +81,7 @@ app.get("/employee/:num", function(req, res) {
     data_service.getEmployeeByNum(req.params.num).then(function(list){
         res.json(list);
     }).catch(function(err) {
-        res.jason({message: err});
+        res.json({message: err});
     });
 });
 
