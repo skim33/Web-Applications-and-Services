@@ -129,7 +129,7 @@ module.exports.getEmployeesByManager = function(manager) {
     });
 }
 
-module.exports.getEmployeesByNum = function(num) {
+module.exports.getEmployeeByNum = function(num) {
     var num_arr = [];
     return new Promise(function(resolve, reject) {
         for (var i = 0; i < employees.length; i++) {
