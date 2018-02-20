@@ -98,7 +98,22 @@ app.get("/images", function(req, res) {
     });
 });
 
-app.post("/employees/add", upload.fields("form-control"), function(req, res) {
+app.post("/employees/add", function(req, res) {
+    var data = {};
+    data.firstName = req.body.firstName;
+    data.lastName = req.body.lastName;
+    data.email = req.body.email;
+    data.SSN = req.body.SSN;
+    data.addressStreet = req.body.addressStreet;
+    data.addressCity = req.body.addressCity;
+    data.addressState = req.body.addressState;
+    data.addressPostal = req.body.addressPostal;
+    data.isManager = req.body.isManager;
+    data.employeeManagerNum = req.body.employeeManagerNum;
+    data.status = req.body.status;
+    data.department = req.body.department;
+    data.hireDate = req.body.hireDate;
+
     data.addEmployee(req.body);
     res.redirect("/employees");
 });
