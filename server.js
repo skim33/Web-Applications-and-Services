@@ -98,8 +98,8 @@ app.get("/images", function(req, res) {
     });
 });
 
-app.post("/employees/add", function(req, res) {
-    addEmployee(req.body);
+app.post("/employees/add", upload.fields("form-control"), function(req, res) {
+    data.addEmployee(req.body);
     res.redirect("/employees");
 });
 
