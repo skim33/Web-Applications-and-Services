@@ -139,7 +139,7 @@ module.exports.getEmployeeByNum = function(num) {
         }
         
         if (num_arr.length > 0) {
-            resolve(num_arr.firstName + " " + num_arr.lastName);
+            resolve(num_arr[0].firstName + " " + num_arr[0].lastName);
         } else {
             reject("no result returned");
         }
