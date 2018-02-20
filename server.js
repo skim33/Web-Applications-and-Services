@@ -114,8 +114,11 @@ app.post("/employees/add", function(req, res) {
     data.department = req.body.department;
     data.hireDate = req.body.hireDate;
 
-    data.addEmployee(req.body);
-    res.redirect("/employees");
+    data_service.addEmployee(data).then(function(){
+        res.redirect("/employees");
+    }).catch(function (err) {
+        res.json({message: err});
+    });
 });
 
 app.use(function(req, res) {
