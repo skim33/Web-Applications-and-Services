@@ -32,6 +32,7 @@ const storage = multer.diskStorage({
     }
 });
 
+//define upload variable
 const upload = multer({storage: storage});
 
 //return the "css/site.css" file
@@ -103,19 +104,23 @@ app.get("/departments", function(req, res) {
     });
 });
 
+//set up the '/employees/add' route to respond to the following get request
 app.get("/employees/add", function(req, res) {
     res.sendFile(path.join(__dirname + "/views/addEmployee.html"));
 });
 
+//set up the '/images/add' route to respond to the following get request
 app.get("/images/add", function(req, res) {
     res.sendFile(path.join(__dirname + "/views/addImage.html"));
 });
 
+//set up the '/images/add' route to respond to the following get request
 app.post("/images/add", upload.single("imageFile"), function(req, res) {
     images.push(req.file.filename);
     res.redirect("/images");
 });
 
+//set up the '/images' route to respond to the following get request
 app.get("/images", function(req, res) {
     fs.readdir(dir, function (err, items){
         var someData = {
@@ -126,6 +131,7 @@ app.get("/images", function(req, res) {
     });
 });
 
+//set up the '/employees/add' route to respond to the following get request
 app.post("/employees/add", function(req, res) {
     var data = {};
     data.firstName = req.body.firstName;
