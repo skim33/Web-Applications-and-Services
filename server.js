@@ -52,7 +52,7 @@ app.get("/", function(req, res) {
 
 //set up the '/about' route to respond to the following get request
 app.get("/about", function(req, res) {
-    res.sendFile(path.join(__dirname + "/views/about.html"));
+    res.render("about");
 });
 
 //set up the '/employees' route to respond to the following get request
@@ -112,12 +112,12 @@ app.get("/departments", function(req, res) {
 
 //set up the '/employees/add' route to respond to the following get request
 app.get("/employees/add", function(req, res) {
-    res.sendFile(path.join(__dirname + "/views/addEmployee.html"));
+    res.render("addEmployee");
 });
 
 //set up the '/images/add' route to respond to the following get request
 app.get("/images/add", function(req, res) {
-    res.sendFile(path.join(__dirname + "/views/addImage.html"));
+    res.render("addImage");
 });
 
 //set up the '/images/add' route to respond to the following get request
