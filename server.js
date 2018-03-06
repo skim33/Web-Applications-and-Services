@@ -80,28 +80,28 @@ app.get("/about", function(req, res) {
 //set up the '/employees' route to respond to the following get request
 app.get("/employees", function(req, res) {
     if(req.query.status) {
-        data_service.getEmployeesByStatus(req.query.status).then(function(list){
-            res.json(list);
+        data_service.getEmployeesByStatus(req.query.status).then(function(data){
+            res.render("employees", {employees: data}) ;
         }).catch(function(err) {
-            res.jason({message: err});
+            res.render({message: "no results"});
         });
     } else if(req.query.department) {
-        data_service.getEmployeesByDepartment(req.query.department).then(function(list){
-            res.json(list);
+        data_service.getEmployeesByDepartment(req.query.department).then(function(data){
+            res.render("employees", {employees: data}) 
         }).catch(function(err) {
-            res.jason({message: err});
+            res.render({message: "no results"});
         });
     } else if(req.query.manager) {
-        data_service.getEmployeesByManager(req.query.manager).then(function(list){
-            res.json(list);
+        data_service.getEmployeesByManager(req.query.manager).then(function(data){
+            res.render("employees", {employees: data}) 
         }).catch(function(err) {
-            res.jason({message: err});
+            res.render({message: "no results"});
         });
     } else {
-        data_service.getAllEmployees().then(function(list){
-            res.json(list);
+        data_service.getAllEmployees().then(function(data){
+            res.render("employees", {employees: data}) 
         }).catch(function(err) {
-            res.jason({message: err});
+            res.render({message: "no results"});
         });
     }
 });
