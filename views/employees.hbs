@@ -20,7 +20,7 @@
                 </thead>
 
                 <tbody>
-                    {{#each data}}
+                    {{#each employees}}
                         <tr>
                             <td>{{{employeeNum}}}</td>
                             <td><a href="/employee/{{employeeNum}}">{{firstName}}&nbsp;{{last_name}}</a></td>
@@ -37,7 +37,7 @@
         </div>
     </div> 
 
-    {{#unless data}}
+    {{#unless employees}}
         <div class="col-md-12 text-center">
             <strong>{{message}}</strong> 
         </div>
