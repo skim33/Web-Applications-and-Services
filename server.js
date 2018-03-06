@@ -48,18 +48,20 @@ app.use(function(req, res, next){
 app.engine('.hbs', exphbs({ 
     extname: '.hbs',
     defaultLayout: 'main',
-    navLink: function (url, options){     
-        return '<li' + ((url == app.locals.activeRoute) ? ' class="active" ' : '') + '><a href="' + url + '">' + options.fn(this) + '</a></li>'; 
-    },
+    helpers: {
+        navLink: function (url, options){     
+            return '<li' + ((url == app.locals.activeRoute) ? ' class="active" ' : '') + '><a href="' + url + '">' + options.fn(this) + '</a></li>'; 
+        },
 
-    equal: function (lvalue, rvalue, options) {
-        if (arguments.length < 3)
-            throw new Error("Handlebars Helper equal needs 2 parameters");     
-        if (lvalue != rvalue) {
-            return options.inverse(this);     
-        } else {         
-            return options.fn(this);     
-        } 
+        equal: function (lvalue, rvalue, options) {
+            if (arguments.length < 3)
+                throw new Error("Handlebars Helper equal needs 2 parameters");     
+            if (lvalue != rvalue) {
+                return options.inverse(this);     
+            } else {         
+                return options.fn(this);     
+            } 
+        }
     }
 }));
 
