@@ -47,25 +47,23 @@ app.use(function(req, res, next){
 
 app.engine('.hbs', exphbs({ 
     extname: '.hbs',
-    defaultLayout: 'main'
- }));
- app.set('view engine', '.hbs');
+    defaultLayout: 'main',
+    navLink: function (url, options){     
+        return '<li' + ((url == app.locals.activeRoute) ? ' class="active" ' : '') + '><a href="' + url + '">' + options.fn(this) + '</a></li>'; 
+    },
 
- navLink: function(url, options){     
-     return '<li' +          
-     ((url == app.locals.activeRoute) ? ' class="active" ' : '') +  
-    '><a href="' + url + '">' + options.fn(this) + '</a></li>'; 
-} 
+    equal: function (lvalue, rvalue, options) {
+        if (arguments.length < 3)
+            throw new Error("Handlebars Helper equal needs 2 parameters");     
+        if (lvalue != rvalue) {
+            return options.inverse(this);     
+        } else {         
+            return options.fn(this);     
+        } 
+    }
+}));
 
-equal: function (lvalue, rvalue, options) {
-    if (arguments.length < 3)
-        throw new Error("Handlebars Helper equal needs 2 parameters");     
-    if (lvalue != rvalue) {
-        return options.inverse(this);     
-    } else {         
-        return options.fn(this);     
-    } 
-}
+app.set('view engine', '.hbs');
 
 //set up the default '/' route to respond to the following get request 
 app.get("/", function(req, res) {
