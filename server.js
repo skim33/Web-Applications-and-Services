@@ -17,6 +17,7 @@ var data_service = require("./data-service.js");
 var multer = require("multer");
 var fs = require("fs");
 var bodyParser = require("body-parser");
+var exphbs = require("express-handlebars");
 var images = [];
 
 var HTTP_PORT = process.env.PORT || 8080;
@@ -38,10 +39,15 @@ const upload = multer({storage: storage});
 //return the "css/site.css" file
 app.use(express.static("./public/"));
 app.use(bodyParser.urlencoded({ extended: true}));
+app.engine('.hbs', exphbs({ 
+    extname: '.hbs',
+    defaultLayout: 'main'
+ }));
+ app.set('view engine', '.hbs');
 
 //set up the default '/' route to respond to the following get request 
 app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname + "/views/home.html"));
+    res.render("home");
 });
 
 //set up the '/about' route to respond to the following get request
