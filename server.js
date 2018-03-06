@@ -39,11 +39,33 @@ const upload = multer({storage: storage});
 //return the "css/site.css" file
 app.use(express.static("./public/"));
 app.use(bodyParser.urlencoded({ extended: true}));
+app.use(function(req, res, next){
+    let route = req.baseUrl + req.path;
+    app.locals.activeRoute=(route=="/")?"/":route.replace(/\/$/,"");
+    next();
+});
+
 app.engine('.hbs', exphbs({ 
     extname: '.hbs',
     defaultLayout: 'main'
  }));
  app.set('view engine', '.hbs');
+
+ navLink: function(url, options){     
+     return '<li' +          
+     ((url == app.locals.activeRoute) ? ' class="active" ' : '') +  
+    '><a href="' + url + '">' + options.fn(this) + '</a></li>'; 
+} 
+
+equal: function (lvalue, rvalue, options) {
+    if (arguments.length < 3)
+        throw new Error("Handlebars Helper equal needs 2 parameters");     
+    if (lvalue != rvalue) {
+        return options.inverse(this);     
+    } else {         
+        return options.fn(this);     
+    } 
+}
 
 //set up the default '/' route to respond to the following get request 
 app.get("/", function(req, res) {
@@ -87,15 +109,6 @@ app.get("/employees", function(req, res) {
 app.get("/employee/:num", function(req, res) {
     data_service.getEmployeeByNum(req.params.num).then(function(list){
         res.json(list);
-    }).catch(function(err) {
-        res.json({message: err});
-    });
-});
-
-//set up the '/managers' route to respond to the following get request
-app.get("/managers", function(req, res) {
-    data_service.getManagers().then(function(data){
-        res.json(data);
     }).catch(function(err) {
         res.json({message: err});
     });
