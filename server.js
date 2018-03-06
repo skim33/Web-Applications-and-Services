@@ -146,7 +146,7 @@ app.get("/images", function(req, res) {
             images: images
         };
 
-        res.json(someData);
+        res.render("images", someData);
     });
 });
 
