@@ -88,22 +88,22 @@
                         <div class="form-group">                             
                             <label>Status:</label><br />  
                                 {{#equal employee.status "Full Time"}}
-                                    <label  class="checkbox-inline">
-                                        <input type="radio" id="statusFulltime" name="status" value="Full Time" checked="" /> Full Time
+                                    <label>
+                                        <input type="radio" name="status" value="Full Time" checked /> Full Time
                                     </label>
 
-                                    <label  class="checkbox-inline">
-                                        <input type="radio" id="statusParttime" name="status" value="Part Time"  /> Part Time
+                                    <label>
+                                        <input type="radio" name="status" value="Part Time" /> Part Time
                                     </label>
                                 {{/equal}}
 
                                 {{#equal employee.status "Part Time"}}
-                                    <label  class="checkbox-inline">
-                                        <input type="radio" id="statusFulltime" name="status" value="Full Time"  /> Full Time
+                                    <label>
+                                        <input type="radio" name="status" value="Full Time" /> Full Time
                                     </label>
 
-                                    <label  class="checkbox-inline">
-                                        <input type="radio" id="statusParttime" name="status" value="Part Time" checked="" /> Part Time
+                                    <label>
+                                        <input type="radio" name="status" value="Part Time" checked /> Part Time
                                     </label>
                                 {{/equal}}
                         </div>

@@ -174,6 +174,10 @@ app.post("/employees/add", function(req, res) {
     });
 });
 
+app.post("/employee/update", function(req, res) {     
+    console.log(req.body);     res.redirect("/employees"); 
+});
+
 app.use(function(req, res) {
     res.status(404).send("Page Not Found");
 });
