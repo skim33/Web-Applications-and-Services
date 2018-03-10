@@ -130,18 +130,12 @@ module.exports.getEmployeesByManager = function(manager) {
 }
 
 module.exports.getEmployeeByNum = function(num) {
-    var num_arr = [];
     return new Promise(function(resolve, reject) {
         for (var i = 0; i < employees.length; i++) {
             if (employees[i].employeeNum == num) {
-                num_arr.push(employees[i]);
+                resolve(employees[i]);
             }
         }
-        
-        if (num_arr.length > 0) {
-            resolve(num_arr[0].firstName + " " + num_arr[0].lastName);
-        } else {
-            reject("no result returned");
-        }
+        reject("no result returned");
     });
 }
