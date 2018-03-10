@@ -106,7 +106,7 @@ app.get("/employees", function(req, res) {
     }
 });
 
-app.get("/employee/:num", function(req, res) {
+app.get("/employee/:empNum", function(req, res) {
     data_service.getEmployeeByNum(req.params.num).then(function(list){
         res.render("employee", {employee:data});
     }).catch(function(err) {
