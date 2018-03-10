@@ -117,9 +117,9 @@ app.get("/employee/:num", function(req, res) {
 //set up the '/departments' route to respond to the following get request
 app.get("/departments", function(req, res) {
     data_service.getDepartments().then(function(data){
-        res.json(data);
+        res.render("departments", {departments:data});
     }).catch(function(err){
-        res.json({message: err});
+        res.render({message: err});
     });
 });
 
