@@ -139,3 +139,16 @@ module.exports.getEmployeeByNum = function(num) {
         reject("no result returned");
     });
 }
+
+module.exports.updateEmployee = function(employeeData) {
+    return new Promise(function(resolve, reject) {
+        for (var i = 0; i < emplyees.length; i++) {
+            if (employees[i].employeeNum == employeeData.employeeNum) {
+                employees[i] = employeeData;
+                resolve();
+            }
+        }
+
+        reject("no result returned");
+    });
+} 
