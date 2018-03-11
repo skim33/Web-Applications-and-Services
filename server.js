@@ -174,9 +174,9 @@ app.post("/employees/add", function(req, res) {
     });
 });
 
-app.post("/employee/update", function(req, res) {         
+app.post("/employee/update", function(req, res) {
+    console.log(req.body);         
     data_service.updateEmployee(req.body).then(function() {
-        console.log(req.body);
         res.redirect("/employees");
     }).catch(function(err) {
         res.json({message: err});

@@ -144,11 +144,10 @@ module.exports.updateEmployee = function(employeeData) {
     return new Promise(function(resolve, reject) {
         for (var i = 0; i < emplyees.length; i++) {
             if (employees[i].employeeNum == employeeData.employeeNum) {
-                employees.splice(employeeData.employeeNum - 1, 1, employeeData);
-                resolve();
+                employees.splice((employeeData.employeeNum - 1), 1, employeeData);
             }
         }
 
-        reject("no result returned");
+        resolve(employees);
     });
 } 
