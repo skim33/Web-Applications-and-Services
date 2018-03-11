@@ -147,7 +147,6 @@ module.exports.updateEmployee = function(employeeData) {
                 employees.splice((employeeData.employeeNum - 1), 1, employeeData);
             }
         }
-
         resolve();
     });
 } 
