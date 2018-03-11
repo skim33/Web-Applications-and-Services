@@ -148,6 +148,6 @@ module.exports.updateEmployee = function(employeeData) {
             }
         }
 
-        resolve(employees);
+        resolve();
     });
 } 
