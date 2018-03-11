@@ -145,7 +145,7 @@ module.exports.updateEmployee = function(employeeData) {
         for (var i = 0; i < emplyees.length; i++) {
             if (employees[i].employeeNum == employeeData.employeeNum) {
                 employees.splice(employeeData.employeeNum - 1, 1, employeeData);
-                resolve(employees);
+                resolve();
             }
         }
 
