@@ -141,10 +141,11 @@ module.exports.getEmployeeByNum = function(num) {
 }
 
 module.exports.updateEmployee = function(employeeData) {
-    console.log(employeeData);
     return new Promise(function(resolve, reject) {
         for (var i = 0; i < emplyees.length; i++) {
             if (employees[i].employeeNum == employeeData.employeeNum) {
+                console.log(employees[i].employeeNum);
+                console.log(employeeData.employeeNum);
                 employees.splice((employeeData.employeeNum - 1), 1, employeeData);
             }
         }
