@@ -133,7 +133,7 @@ app.get("/images/add", function(req, res) {
     res.render("addImage");
 });
 
-//set up the '/images/add' route to respond to the following get request
+//set up the '/images/add' route to respond to the following post request
 app.post("/images/add", upload.single("imageFile"), function(req, res) {
     images.push(req.file.filename);
     res.redirect("/images");
@@ -150,7 +150,7 @@ app.get("/images", function(req, res) {
     });
 });
 
-//set up the '/employees/add' route to respond to the following get request
+//set up the '/employees/add' route to respond to the following post request
 app.post("/employees/add", function(req, res) {
     var data = {};
     data.firstName = req.body.firstName;
@@ -174,6 +174,7 @@ app.post("/employees/add", function(req, res) {
     });
 });
 
+//set up the '/employee/update' route to respond to the following post request
 app.post("/employee/update", function(req, res) {
     console.log(req.body);         
     data_service.updateEmployee(req.body).then(function() {
