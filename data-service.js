@@ -120,7 +120,7 @@ module.exports.getEmployeesByStatus = function(status) {
         sequelize.sync().then(function() {
             resolve(Employee.findAll({
                 where: {
-                    [Op.eq]: {status: status}
+                    status: status
                 }
             }));
         }).catch(function(err) {
@@ -148,7 +148,7 @@ module.exports.getEmployeesByManager = function(manager) {
         sequelize.sync().then(function() {
             resolve(Employee.findAll({
                 where: {
-                    [Op.eq]: {employeeManagerNum: manager}
+                    employeeManagerNum: manager
                 }
             }));
         }).catch(function(err) {
@@ -162,7 +162,7 @@ module.exports.getEmployeeByNum = function(num) {
         sequelize.sync().then(function() {
             resolve(Employee.findAll({
                 where: {
-                    [Op.eq]: {employeeNum: num}
+                    employeeNum: num
                 }
             }));
         }).catch(function(err) {
@@ -196,7 +196,7 @@ module.exports.updateEmployee = function(employeeData) {
                 department: employeeData.department,
                 hireDate: employeeData.hireDate},
                 { where: {
-                    [Op.eq]: {employeeNum: employeeData.employeeNum}
+                    employeeNum: employeeData.employeeNum
                 }
             })).catch(function() {
                 reject("unable to create employee");
