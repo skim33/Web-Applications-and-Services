@@ -81,25 +81,41 @@ app.get("/about", function(req, res) {
 app.get("/employees", function(req, res) {
     if(req.query.status) {
         data_service.getEmployeesByStatus(req.query.status).then(function(data){
-            res.render("employees", {employees: data}) ;
+            if (data.length > 0) {
+                res.render("employees", {employees: data});
+            } else {
+                res.render({message: "no results"});
+            }
         }).catch(function(err) {
             res.render({message: "no results"});
         });
     } else if(req.query.department) {
         data_service.getEmployeesByDepartment(req.query.department).then(function(data){
-            res.render("employees", {employees: data}) 
+            if (data.length > 0) {
+                res.render("employees", {employees: data});
+            } else {
+                res.render({message: "no results"});
+            } 
         }).catch(function(err) {
             res.render({message: "no results"});
         });
     } else if(req.query.manager) {
         data_service.getEmployeesByManager(req.query.manager).then(function(data){
-            res.render("employees", {employees: data}) 
+            if (data.length > 0) {
+                res.render("employees", {employees: data});
+            } else {
+                res.render({message: "no results"});
+            } 
         }).catch(function(err) {
             res.render({message: "no results"});
         });
     } else {
         data_service.getAllEmployees().then(function(data){
-            res.render("employees", {employees: data}) 
+            if (data.length > 0) {
+                res.render("employees", {employees: data});
+            } else {
+                res.render({message: "no results"});
+            } 
         }).catch(function(err) {
             res.render({message: "no results"});
         });
@@ -117,7 +133,11 @@ app.get("/employee/:empNum", function(req, res) {
 //set up the '/departments' route to respond to the following get request
 app.get("/departments", function(req, res) {
     data_service.getDepartments().then(function(data){
-        res.render("departments", {departments:data});
+        if (data.length > 0) {
+            res.render("departments", {departments:data});
+        } else {
+            res.render({message: err});
+        }
     }).catch(function(err){
         res.render({message: err});
     });
