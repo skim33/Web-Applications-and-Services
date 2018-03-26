@@ -136,7 +136,7 @@ app.get("/departments", function(req, res) {
         if (data.length > 0) {
             res.render("departments", {departments:data});
         } else {
-            res.render({message: err});
+            res.render({message: "no results"});
         }
     }).catch(function(err){
         res.render({message: err});
