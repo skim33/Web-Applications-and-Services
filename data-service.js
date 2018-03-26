@@ -19,7 +19,7 @@ var sequelize = new Sequelize('d512uud7mtf9cp', 'tcjftcyoxzqram', '727081f190b8d
     }
 });
 
-var Employee = sequelize.define('Employee', {
+const Employee = sequelize.define("Employee", {
     employeeNum: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     firstName: Sequelize.STRING,
     lastName: Sequelize.STRING,
@@ -37,7 +37,7 @@ var Employee = sequelize.define('Employee', {
     hireDate:Sequelize.STRING
 });
 
-var Department = sequelize.define('Department', {
+const Department = sequelize.define("Department", {
     departmentId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     departmentName: Sequelize.STRING
 });
