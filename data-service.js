@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 var sequelize = new Sequelize('d512uud7mtf9cp', 'tcjftcyoxzqram', '727081f190b8d2a8b91a07e406809948c551080bc7a084ddc7638fdaea60e6b6', {
     host:'ec2-107-20-151-189.compute-1.amazonaws.com',
@@ -110,7 +111,7 @@ module.exports.getEmployeesByStatus = function(status) {
         sequelize.sync().then(function() {
             resolve(Employee.findAll({
                 where: {
-                    status: status
+                    [Op.eq]: {status: status}
                 }
             }));
         }).catch(function(err) {
@@ -138,7 +139,7 @@ module.exports.getEmployeesByManager = function(manager) {
         sequelize.sync().then(function() {
             resolve(Employee.findAll({
                 where: {
-                    employeeManagerNum: manager
+                    [Op.eq]: {employeeManagerNum: manager}
                 }
             }));
         }).catch(function(err) {
@@ -152,7 +153,7 @@ module.exports.getEmployeeByNum = function(num) {
         sequelize.sync().then(function() {
             resolve(Employee.findAll({
                 where: {
-                    employeeNum: num
+                    [Op.eq]: {employeeNum: num}
                 }
             }));
         }).catch(function(err) {
@@ -186,7 +187,7 @@ module.exports.updateEmployee = function(employeeData) {
                 department: employeeData.department,
                 hireDate: employeeData.hireDate},
                 { where: {
-                    employeeNum: employeeData.employeeNum
+                    [Op.eq]: {employeeNum: employeeData.employeeNum}
                 }
             })).catch(function() {
                 reject("unable to create employee");
