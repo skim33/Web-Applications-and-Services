@@ -7,6 +7,15 @@ var sequelize = new Sequelize('d512uud7mtf9cp', 'tcjftcyoxzqram', '727081f190b8d
     port:5432,
     dialectOptions:{
         ssl:true
+    },
+    operatorsAliases: {
+        $and: Op.and,
+        $or: Op.or,
+        $eq: Op.eq,
+        $gt: Op.gt,
+        $lt: Op.lt,
+        $lte: Op.lte,
+        $like: Op.like
     }
 });
 
