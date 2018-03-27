@@ -19,6 +19,12 @@ var sequelize = new Sequelize('d512uud7mtf9cp', 'tcjftcyoxzqram', '727081f190b8d
     }
 });
 
+sequelize.authenticate().then(function() {
+    console.log('Connection has been established successfully.');
+}).catch(function(err) {
+    console.log('Unable to connect to the database:', err);
+});
+
 const Employee = sequelize.define("Employee", {
     employeeNum: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     firstName: Sequelize.STRING,
@@ -34,12 +40,17 @@ const Employee = sequelize.define("Employee", {
     employeeManagerNum: Sequelize.INTEGER,
     status: Sequelize.STRING,
     department: Sequelize.INTEGER,
-    hireDate:Sequelize.STRING
+    hireDate:Sequelize.STRING },
+    {
+        createdAt: false,
+        updatedAt: false
 });
 
 const Department = sequelize.define("Department", {
     departmentId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    departmentName: Sequelize.STRING
+    departmentName: Sequelize.STRING}, {
+        createdAt: false,
+        updatedAt: false
 });
 
 module.exports.initialize = function() {
@@ -206,3 +217,61 @@ module.exports.updateEmployee = function(employeeData) {
         });
     });
 } 
+
+module.exports.addDepartment = function(departmentData) {
+    return new Promise(function(resolve, reject) {
+        sequelize.sync().then(function() {
+            for (var i in departmentData) {
+                if (departmentData[i] == "") {
+                    departmentData[i] = null;
+                }
+            }
+            Department.create({
+                departmentId: departmentData.departmentId,
+                departmentName: departmentData.departmentName
+            }).then(function() {
+                resolve(Department);
+            }).catch(function(err) {
+                reject("unable to create department");
+            })
+        }).catch(function() {
+            reject("unable to create department");
+        });
+    });
+}
+
+module.exports.updateDepartment = function(departmentData) {
+    return new Promise(function(resolve, reject) {
+        sequelize.sync().then(function() {
+            for (var i in departmentData) {
+                if (departmentData[i] == "") {
+                    departmentData[i] = null;
+                }
+            }
+            Department.update({
+                departmentName: departmentData.departmentName},
+                { where: {
+                    departmentId: departmentData.departmentId
+                }
+            }).then(function() {
+                resolve(Department);
+            }).catch(function(err) {
+                reject("unable to update department");
+            });
+        }).catch(function() {
+            reject("unable to update department");
+        });
+    });
+}
+
+module.exports.getDepartmentById = function(id) {
+    return new Promise(function(resolve, reject) {
+        sequelize.sync().then(function() {
+            resolve(Department.findAll({
+                where: {departmentId: id }
+            }));
+        }).catch(function(err) {
+            reject("no results returned");
+        });
+    });
+}

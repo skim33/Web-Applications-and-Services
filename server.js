@@ -143,6 +143,35 @@ app.get("/departments", function(req, res) {
     });
 });
 
+app.get("/departments/add", function(req, res) {
+    res.render("addDepartment");
+});
+
+app.post("/departments/add", function(req, res) {
+    date_service.addDepartment(req.body).then(function(data) {
+        res.redirect("/departments");
+    }).catch(function(err) {
+        res.render({message: err});
+    });
+});
+
+app.post("/department/update", function(req, res) {
+    console.log(req.body);         
+    data_service.updateDepartment(req.body).then(function() {
+        res.redirect("/departments");
+    }).catch(function(err) {
+        res.json({message: err});
+    });
+});
+
+app.get("/department/:departmentId", function(req, res) {
+    data_service.getDepartmentById(req.params.departmentId).then(function(data){
+        res.render("department", {department: data});
+    }).catch(function(err) {
+        res.status(404).send("Department Not Found");
+    });
+});
+
 //set up the '/employees/add' route to respond to the following get request
 app.get("/employees/add", function(req, res) {
     res.render("addEmployee");
