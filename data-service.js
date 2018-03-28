@@ -25,7 +25,7 @@ sequelize.authenticate().then(function() {
     console.log('Unable to connect to the database:', err);
 });
 
-const Employee = sequelize.define("Employee", {
+const Employee = sequelize.define('Employee', {
     employeeNum: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     firstName: Sequelize.STRING,
     lastName: Sequelize.STRING,
