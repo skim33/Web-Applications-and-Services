@@ -158,7 +158,7 @@ app.post("/department/update", function(req, res) {
 
 app.get("/department/:departmentId", function(req, res) {
     data_service.getDepartmentById(req.params.departmentId).then(function(data){
-        res.render("department", {: data});
+        res.render("department", {department: data});
     }).catch(function(err) {
         res.status(404).send("Department Not Found");
     });
