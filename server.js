@@ -83,8 +83,6 @@ app.get("/employees", function(req, res) {
         data_service.getEmployeesByStatus(req.query.status).then(function(data){
             if (data.length > 0) {
                 res.render("employees", {employees: data});
-            } else {
-                res.render({message: "no results"});
             }
         }).catch(function(err) {
             res.render({message: "no results"});
@@ -93,9 +91,7 @@ app.get("/employees", function(req, res) {
         data_service.getEmployeesByDepartment(req.query.department).then(function(data){
             if (data.length > 0) {
                 res.render("employees", {employees: data});
-            } else {
-                res.render({message: "no results"});
-            } 
+            }
         }).catch(function(err) {
             res.render({message: "no results"});
         });
@@ -103,9 +99,7 @@ app.get("/employees", function(req, res) {
         data_service.getEmployeesByManager(req.query.manager).then(function(data){
             if (data.length > 0) {
                 res.render("employees", {employees: data});
-            } else {
-                res.render({message: "no results"});
-            } 
+            }
         }).catch(function(err) {
             res.render({message: "no results"});
         });
@@ -113,9 +107,7 @@ app.get("/employees", function(req, res) {
         data_service.getAllEmployees().then(function(data){
             if (data.length > 0) {
                 res.render("employees", {employees: data});
-            } else {
-                res.render({message: "no results"});
-            } 
+            }
         }).catch(function(err) {
             res.render({message: "no results"});
         });
@@ -135,6 +127,8 @@ app.get("/departments", function(req, res) {
     data_service.getDepartments().then(function(data){
         if (data.length > 0) {
             res.render("departments", {departments:data});
+        } else {
+            res.render({message: "no results"});
         }
     }).catch(function(err){
         res.render({message: err});
@@ -164,7 +158,7 @@ app.post("/department/update", function(req, res) {
 
 app.get("/department/:departmentId", function(req, res) {
     data_service.getDepartmentById(req.params.departmentId).then(function(data){
-        res.render("department", {department: data});
+        res.render("department", {: data});
     }).catch(function(err) {
         res.status(404).send("Department Not Found");
     });
