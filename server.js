@@ -185,7 +185,7 @@ app.get("/departments/add", function(req, res) {
 });
 
 app.post("/departments/add", function(req, res) {
-    date_service.addDepartment(req.body).then(function(data) {
+    data_service.addDepartment(req.body).then(function(data) {
         res.redirect("/departments");
     }).catch(function(err) {
         res.render({message: err});
