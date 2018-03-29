@@ -14,6 +14,8 @@
 var express = require("express");
 var path = require("path");
 var data_service = require("./data-service.js");
+var multer = require("multer");
+var fs = require("fs");
 var bodyParser = require("body-parser");
 var exphbs = require("express-handlebars");
 var images = [];
@@ -21,6 +23,18 @@ var images = [];
 var HTTP_PORT = process.env.PORT || 8080;
 
 var app = express();
+
+var dir = "process.argv[2]";
+
+const storage = multer.diskStorage({
+    destination: "./public/images/uploaded",
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+//define upload variable
+const upload = multer({storage: storage});
 
 //return the "css/site.css" file
 app.use(express.static("./public/"));
@@ -98,9 +112,7 @@ app.get("/employees", function(req, res) {
     } else {
         data_service.getAllEmployees().then(function(data){
             if (data.length > 0) {
-                res.render("employees", {employees: data}).catch(function(err) {
-                    res.render("employees",{ message: "no results" });
-                });
+                res.render("employees", {employees: data});
             }
         }).catch(function(err) {
             res.render({message: "no results"});
@@ -157,7 +169,7 @@ app.get("/employees/delete/:empNum", function(req, res) {
 app.get("/departments", function(req, res) {
     data_service.getDepartments().then(function(data){
         if (data.length > 0) {
-            res.render("departments", {departments:data}).catch(function(err) {
+            res.render("departments", {departments: data}).catch(function(err) {
                 res.render("departments",{ message: "no results" });
             });
         }
