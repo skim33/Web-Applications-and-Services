@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 var sequelize = new Sequelize('d512uud7mtf9cp', 'tcjftcyoxzqram', '727081f190b8d2a8b91a07e406809948c551080bc7a084ddc7638fdaea60e6b6', {
     host:'ec2-107-20-151-189.compute-1.amazonaws.com',
@@ -6,6 +7,15 @@ var sequelize = new Sequelize('d512uud7mtf9cp', 'tcjftcyoxzqram', '727081f190b8d
     port:5432,
     dialectOptions:{
         ssl:true
+    },
+    operatorsAliases: {
+        $and: Op.and,
+        $or: Op.or,
+        $eq: Op.eq,
+        $gt: Op.gt,
+        $lt: Op.lt,
+        $lte: Op.lte,
+        $like: Op.like
     }
 });
 
