@@ -114,6 +114,15 @@ app.get("/employees", function(req, res) {
     }
 });
 
+//set up the '/employees/add' route to respond to the following get request
+app.get("/employees/add", function(req, res) {
+    data_service.getDepartments().then(function(data) {
+        res.render("addEmployee", {departments:data});
+    }).catch(function(err) {
+        res.render("addEmployee", {departments: []});
+    });
+});
+
 app.get("/employee/:empNum", function(req, res) {
      // initialize an empty object to store the values     
      let viewData = {}; 
@@ -174,49 +183,12 @@ app.get("/departments/add", function(req, res) {
     res.render("addDepartment");
 });
 
-app.post("/departments/add", function(req, res) {
-    data_service.addDepartment(req.body).then(function(data) {
-        res.redirect("/departments");
-    }).catch(function(err) {
-        res.json({message: err});
-    });
-});
-
-app.post("/department/update", function(req, res) {
-    console.log(req.body);         
-    data_service.updateDepartment(req.body).then(function() {
-        res.redirect("/departments");
-    }).catch(function(err) {
-        res.json({message: err});
-    });
-});
-
 app.get("/department/:departmentId", function(req, res) {
     data_service.getDepartmentById(req.params.departmentId).then(function(data){
         res.render("department", {department: data});
     }).catch(function(err) {
         res.status(404).send("Department Not Found");
     });
-});
-
-//set up the '/employees/add' route to respond to the following get request
-app.get("/employees/add", function(req, res) {
-    data_service.getDepartments().then(function(data) {
-        res.render("addEmployee", {departments:data});
-    }).catch(function(err) {
-        res.render("addEmployee", {departments: []});
-    });
-});
-
-//set up the '/images/add' route to respond to the following get request
-app.get("/images/add", function(req, res) {
-    res.render("addImage");
-});
-
-//set up the '/images/add' route to respond to the following post request
-app.post("/images/add", upload.single("imageFile"), function(req, res) {
-    images.push(req.file.filename);
-    res.redirect("/images");
 });
 
 //set up the '/images' route to respond to the following get request
@@ -228,6 +200,11 @@ app.get("/images", function(req, res) {
 
         res.render("images", someData);
     });
+});
+
+//set up the '/images/add' route to respond to the following get request
+app.get("/images/add", function(req, res) {
+    res.render("addImage");
 });
 
 //set up the '/employees/add' route to respond to the following post request
@@ -246,6 +223,29 @@ app.post("/employee/update", function(req, res) {
     }).catch(function(err) {
         res.json({message: err});
     });
+});
+
+app.post("/departments/add", function(req, res) {
+    data_service.addDepartment(req.body).then(function(data) {
+        res.redirect("/departments");
+    }).catch(function(err) {
+        res.json({message: err});
+    });
+});
+
+app.post("/department/update", function(req, res) {
+    console.log(req.body);         
+    data_service.updateDepartment(req.body).then(function() {
+        res.redirect("/departments");
+    }).catch(function(err) {
+        res.json({message: err});
+    });
+});
+
+//set up the '/images/add' route to respond to the following post request
+app.post("/images/add", upload.single("imageFile"), function(req, res) {
+    images.push(req.file.filename);
+    res.redirect("/images");
 });
 
 app.use(function(req, res) {
