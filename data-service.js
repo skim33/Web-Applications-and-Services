@@ -8,15 +8,15 @@ var sequelize = new Sequelize('d512uud7mtf9cp', 'tcjftcyoxzqram', '727081f190b8d
     dialectOptions:{
         ssl:true
     },
-    operatorsAliases: {
-        $and: Op.and,
-        $or: Op.or,
-        $eq: Op.eq,
-        $gt: Op.gt,
-        $lt: Op.lt,
-        $lte: Op.lte,
-        $like: Op.like
-    }
+    // operatorsAliases: {
+    //     $and: Op.and,
+    //     $or: Op.or,
+    //     $eq: Op.eq,
+    //     $gt: Op.gt,
+    //     $lt: Op.lt,
+    //     $lte: Op.lte,
+    //     $like: Op.like
+    // }
 });
 
 sequelize.authenticate().then(function() {
@@ -60,9 +60,9 @@ module.exports.initialize = function() {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
             resolve("connected");
-        }).catch((function(err) {
+        }).catch(function(err) {
             reject("unable to sync the database");
-        }));
+        });
     });
 }
 
@@ -71,9 +71,9 @@ module.exports.getAllEmployees = function() {
         sequelize.sync().then(function() {
             Employee.findAll().then(function(data) {
                 resolve(data);
-            })
-        }).catch(function(err) {
-            reject("no results returned");
+            }).catch(function(err) {
+                reject("no results returned");
+            });
         });
     });
 }

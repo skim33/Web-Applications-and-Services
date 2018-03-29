@@ -106,6 +106,7 @@ app.get("/employees", function(req, res) {
     } else {
         data_service.getAllEmployees().then(function(data){
             if (data.length > 0) {
+                console.log(data);
                 res.render("employees", {employees: data});
             }
         }).catch(function(err) {
