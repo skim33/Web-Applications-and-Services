@@ -194,7 +194,6 @@ module.exports.updateEmployee = function(employeeData) {
                 }
             }
             resolve(Employee.create({
-                employeeNum: employeeData.employeeNum,
                 firstName: employeeData.firstName,
                 lastName: employeeData.lastName,
                 email: employeeData.email,
@@ -221,7 +220,6 @@ module.exports.updateEmployee = function(employeeData) {
 } 
 
 module.exports.addDepartment = function(departmentData) {
-    console.log(departmentData);
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
             for (var i in departmentData) {
@@ -230,7 +228,6 @@ module.exports.addDepartment = function(departmentData) {
                 }
             }
             Department.create({
-                departmentId: departmentData.departmentId,
                 departmentName: departmentData.departmentName
             }).then(function() {
                 resolve(Department);
