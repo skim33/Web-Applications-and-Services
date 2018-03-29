@@ -106,8 +106,9 @@ app.get("/employees", function(req, res) {
     } else {
         data_service.getAllEmployees().then(function(data){
             if (data.length > 0) {
-                console.log(data);
                 res.render("employees", {employees: data});
+            } else {
+                res.render("employees", { message: "no results" });
             }
         }).catch(function(err) {
             res.render("employees", { message: "no results" });
@@ -128,7 +129,7 @@ app.get("/employee/:empNum", function(req, res) {
      // initialize an empty object to store the values     
      let viewData = {}; 
  
-     dataService.getEmployeeByNum(req.params.empNum).then((data) => {         
+     data_service.getEmployeeByNum(req.params.empNum).then((data) => {         
         if (data) {             
              viewData.employee = data; //store employee data in the "viewData" object as "employee"         
         } else {             
@@ -136,7 +137,7 @@ app.get("/employee/:empNum", function(req, res) {
         }     
     }).catch(() => {         
         viewData.employee = null; // set employee to null if there was an error      
-    }).then(dataService.getDepartments)     
+    }).then(data_service.getDepartments)     
     .then((data) => {         
         viewData.departments = data; // store department data in the "viewData" object as "departments" 
  
@@ -174,9 +175,11 @@ app.get("/departments", function(req, res) {
     data_service.getDepartments().then(function(data){
         if (data.length > 0) {
             res.render("departments", {departments: data});
+        } else {
+            res.render("departments", {message: err});
         }
     }).catch(function(err){
-        res.render("departments", {message: err});
+        res.render("departments", {message: "no results"});
     });
 });
 

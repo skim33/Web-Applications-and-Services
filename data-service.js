@@ -8,15 +8,15 @@ var sequelize = new Sequelize('d512uud7mtf9cp', 'tcjftcyoxzqram', '727081f190b8d
     dialectOptions:{
         ssl:true
     },
-    // operatorsAliases: {
-    //     $and: Op.and,
-    //     $or: Op.or,
-    //     $eq: Op.eq,
-    //     $gt: Op.gt,
-    //     $lt: Op.lt,
-    //     $lte: Op.lte,
-    //     $like: Op.like
-    // }
+    operatorsAliases: {
+        $and: Op.and,
+        $or: Op.or,
+        $eq: Op.eq,
+        $gt: Op.gt,
+        $lt: Op.lt,
+        $lte: Op.lte,
+        $like: Op.like
+    }
 });
 
 sequelize.authenticate().then(function() {
@@ -88,9 +88,11 @@ module.exports.getManagers = function() {
 module.exports.getDepartments = function() {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
-            resolve(Department.findAll());
-        }).catch(function(err) {
-            reject("no results returned");
+            Department.findAll().then(function(data) {
+                resolve(data);
+            }).catch(function(err) {
+                reject("no results returned");
+            });
         });
     });
 }
@@ -121,12 +123,12 @@ module.exports.addEmployee = function(employeeData) {
                 status: employeeData.status,
                 department: employeeData.department,
                 hireDate:employeeData.hireDate
-            }).then(function() {
-                resolve(Employee);
-            }).catch(function() {
+            }).then(function(data) {
+                resolve(data);
+            }).catch(function(err) {
                 reject("unable to create employee");
             });
-        }).catch(function() {
+        }).catch(function(err) {
             reject("unable to create employee");
         });
     });
@@ -135,13 +137,14 @@ module.exports.addEmployee = function(employeeData) {
 module.exports.getEmployeesByStatus = function(status) {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
-            resolve(Employee.findAll({
+            Employee.findAll({
                 where: {
                     status: status
-                }
-            }));
-        }).catch(function(err) {
-            reject("no results returned");
+            }}).then(function(data) {
+                resolve(data);
+            }).catch(function(err) {
+                reject("no results returned");
+            });
         });
     });
 }
@@ -149,13 +152,15 @@ module.exports.getEmployeesByStatus = function(status) {
 module.exports.getEmployeesByDepartment = function(department) {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
-            resolve(Employee.findAll({
+            Employee.findAll({
                 where: {
                     department: department
                 }
-            }));
-        }).catch(function(err) {
-            reject("no results returned");
+            }).then(function(data) {
+                resolve(data);
+            }).catch(function(err) {
+                reject("no results returned");
+            });
         });
     });
 }
@@ -163,13 +168,15 @@ module.exports.getEmployeesByDepartment = function(department) {
 module.exports.getEmployeesByManager = function(manager) {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
-            resolve(Employee.findAll({
+            Employee.findAll({
                 where: {
                     employeeManagerNum: manager
                 }
-            }));
-        }).catch(function(err) {
-            reject("no results returned");
+            }).then(function(data) {
+                resolve(data);
+            }).catch(function(err) {
+                reject("no results returned");
+            });
         });
     });
 }
@@ -177,11 +184,13 @@ module.exports.getEmployeesByManager = function(manager) {
 module.exports.getEmployeeByNum = function(num) {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
-            resolve(Employee.findAll({
+            Employee.findAll({
                 where: {
                     employeeNum: num
                 }
-            }));
+            }).then(function(data) {
+                resolve(data);
+            });
         }).catch(function(err) {
             reject("no results returned");
         });
@@ -215,12 +224,12 @@ module.exports.updateEmployee = function(employeeData) {
                 { where: {
                     employeeNum: employeeData.employeeNum
                 }
-            }).then(function() {
-                resolve(Employee);
-            }).catch(function() {
+            }).then(function(data) {
+                resolve(data);
+            }).catch(function(err) {
                 reject("unable to create employee");
             });
-        }).catch(function() {
+        }).catch(function(err) {
             reject("unable to create employee");
         });
     });
@@ -237,12 +246,12 @@ module.exports.addDepartment = function(departmentData) {
             Department.create({
                 departmentId: departmentData.departmentId,
                 departmentName: departmentData.departmentName
-            }).then(function() {
-                resolve(Department);
+            }).then(function(data) {
+                resolve(data);
             }).catch(function(err) {
                 reject("unable to create department");
             });
-        }).catch(function() {
+        }).catch(function(err) {
             reject("unable to create department");
         });
     });
@@ -261,12 +270,12 @@ module.exports.updateDepartment = function(departmentData) {
                 { where: {
                     departmentId: departmentData.departmentId
                 }
-            }).then(function() {
-                resolve(Department);
+            }).then(function(data) {
+                resolve(data);
             }).catch(function(err) {
                 reject("unable to update department");
             });
-        }).catch(function() {
+        }).catch(function(err) {
             reject("unable to update department");
         });
     });
@@ -275,11 +284,13 @@ module.exports.updateDepartment = function(departmentData) {
 module.exports.getDepartmentById = function(id) {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
-            resolve(Department.findAll({
+            Department.findAll({
                 where: {departmentId: id }
-            }));
-        }).catch(function(err) {
-            reject("no results returned");
+            }).then(function(data) {
+                resolve(data);
+            }).catch(function(err) {
+                reject("no results returned");
+            });
         });
     });
 }
@@ -287,12 +298,13 @@ module.exports.getDepartmentById = function(id) {
 module.exports.deleteEmployeeByNum = function(empNum) {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
-            resolve(Employee.destroy({
-                where: {
-                    employeeNum: empNum
-                }}));
-        }).catch(function(err) {
-            reject();
+            Employee.destroy({
+                where: { employeeNum: empNum }
+            }).then(function(data) {
+                resolve(data);
+            }).catch(function(err) {
+                reject(err);
+            });
         });
     });
 }
