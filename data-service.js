@@ -228,6 +228,7 @@ module.exports.addDepartment = function(departmentData) {
                 }
             }
             Department.create({
+                departmentId: departmentData.departmentId,
                 departmentName: departmentData.departmentName
             }).then(function() {
                 resolve(Department);
