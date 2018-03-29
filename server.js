@@ -82,9 +82,7 @@ app.get("/employees", function(req, res) {
     if(req.query.status) {
         data_service.getEmployeesByStatus(req.query.status).then(function(data){
             if (data.length > 0) {
-                res.render("employees", {employees: data}).catch(function(err) {
-                    res.render("employees", { message: "no results" });
-                });
+                res.render("employees", {employees: data});
             }
         }).catch(function(err) {
             res.render("employees", { message: "no results" });
@@ -92,9 +90,7 @@ app.get("/employees", function(req, res) {
     } else if(req.query.department) {
         data_service.getEmployeesByDepartment(req.query.department).then(function(data){
             if (data.length > 0) {
-                res.render("employees", {employees: data}).catch(function(err) {
-                    res.render("employees", { message: "no results" });
-                });
+                res.render("employees", {employees: data});
             }
         }).catch(function(err) {
             res.render("employees", { message: "no results" });
@@ -103,18 +99,14 @@ app.get("/employees", function(req, res) {
         data_service.getEmployeesByManager(req.query.manager).then(function(data){
             if (data.length > 0) {
                 res.render("employees", {employees: data}).catch(function(err) {
-                    res.render("employees", { message: "no results" });
-                });
             }
-        }).catch(function(err) {
+        ).catch(function(err) {
             res.render("employees", { message: "no results" });
         });
     } else {
         data_service.getAllEmployees().then(function(data){
             if (data.length > 0) {
-                res.render("employees", {employees: data}).catch(function(err) {
-                    res.render("employees", { message: "no results" });
-                });
+                res.render("employees", {employees: data});
             }
         }).catch(function(err) {
             res.render("employees", { message: "no results" });
@@ -171,9 +163,7 @@ app.get("/employees/delete/:empNum", function(req, res) {
 app.get("/departments", function(req, res) {
     data_service.getDepartments().then(function(data){
         if (data.length > 0) {
-            res.render("departments", {departments: data}).catch(function(err) {
-                res.render("departments",{ message: "no results" });
-            });
+            res.render("departments", {departments: data});
         }
     }).catch(function(err){
         res.render("departments", {message: err});
