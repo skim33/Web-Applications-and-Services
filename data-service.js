@@ -54,7 +54,7 @@ const Department = sequelize.define("Department", {
         updatedAt: false
 });
 
-Employee.hasOne(Department);
+Department.hasMany(Employee);
 
 module.exports.initialize = function() {
     return new Promise(function(resolve, reject) {
