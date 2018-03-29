@@ -151,6 +151,14 @@ app.get("/employee/:empNum", function(req, res) {
     });
 });
 
+app.get("/employees/delete/:empNum", function(req, res) {
+    data_service.deleteEmployeeByNum(req.params.empNum).then(function(data) {
+        res.redirect("/employees");
+    }).catch(function(err) {
+        res.status(500).send("Unable to Remove Employee / Employee not found");
+    });
+});
+
 //set up the '/departments' route to respond to the following get request
 app.get("/departments", function(req, res) {
     data_service.getDepartments().then(function(data){

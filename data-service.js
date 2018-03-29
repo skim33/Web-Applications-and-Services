@@ -275,3 +275,16 @@ module.exports.getDepartmentById = function(id) {
         });
     });
 }
+
+module.exports.deleteEmployeeByNum = function(empNum) {
+    return new Promise(function(resolve, reject) {
+        sequelize.sync().then(function() {
+            resolve(Employee.destroy({
+                where: {
+                    employeeNum: empNum
+                }}));
+        }).catch(function(err) {
+            reject();
+        });
+    });
+}
