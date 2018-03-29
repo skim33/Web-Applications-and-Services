@@ -221,6 +221,7 @@ module.exports.updateEmployee = function(employeeData) {
 } 
 
 module.exports.addDepartment = function(departmentData) {
+    console.log(departmentData);
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
             for (var i in departmentData) {
