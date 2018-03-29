@@ -248,10 +248,6 @@ app.post("/employee/update", function(req, res) {
     });
 });
 
-app.post("/employees/update", (req, res) => {
-    res.redirect("/employees");
-});
-
 app.use(function(req, res) {
     res.status(404).send("Page Not Found");
 });
