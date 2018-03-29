@@ -106,7 +106,6 @@ module.exports.addEmployee = function(employeeData) {
                 }
             }
             resolve(Employee.create({
-                employeeNum: employeeNum.employeeNum,
                 firstName: employeeData.firstName,
                 lastName: employeeData.lastName,
                 email: employeeData.email,
