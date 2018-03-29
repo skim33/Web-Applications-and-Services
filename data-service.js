@@ -54,8 +54,6 @@ const Department = sequelize.define("Department", {
         updatedAt: false
 });
 
-Department.hasMany(Employee);
-
 module.exports.initialize = function() {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function(Employee) {
