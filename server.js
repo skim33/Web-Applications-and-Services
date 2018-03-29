@@ -115,10 +115,39 @@ app.get("/employees", function(req, res) {
 });
 
 app.get("/employee/:empNum", function(req, res) {
-    data_service.getEmployeeByNum(req.params.empNum).then(function(data){
-        res.render("employee", {employee: data});
-    }).catch(function(err) {
-        res.render("employee", {message: "no results"});
+     // initialize an empty object to store the values     
+     let viewData = {}; 
+ 
+     dataService.getEmployeeByNum(req.params.empNum).then((data) => {         
+        if (data) {             
+             viewData.employee = data; //store employee data in the "viewData" object as "employee"         
+        } else {             
+            viewData.employee = null; // set employee to null if none were returned         
+        }     
+    }).catch(() => {         
+        viewData.employee = null; // set employee to null if there was an error      
+    }).then(dataService.getDepartments)     
+    .then((data) => {         
+        viewData.departments = data; // store department data in the "viewData" object as "departments" 
+ 
+     // loop through viewData.departments and once we have found the departmentId that matches         
+     // the employee's "department" value, add a "selected" property to the matching          
+     // viewData.departments object 
+
+        for (let i = 0; i < viewData.departments.length; i++) {             
+            if (viewData.departments[i].departmentId == viewData.employee.department) {                 
+            viewData.departments[i].selected = true;             
+            }         
+        } 
+
+    }).catch(() => {         
+        viewData.departments = []; // set departments to empty if there was an error     
+    }).then(() => {         
+        if (viewData.employee == null) { // if no employee - return an error             
+            res.status(404).send("Employee Not Found");         
+        } else { 
+        res.render("employee", { viewData: viewData }); // render the "employee" view         
+        }     
     });
 });
 
@@ -164,7 +193,11 @@ app.get("/department/:departmentId", function(req, res) {
 
 //set up the '/employees/add' route to respond to the following get request
 app.get("/employees/add", function(req, res) {
-    res.render("addEmployee");
+    data_service.getDepartments().then(function(data) {
+        res.render("addEmployee", {departments:data});
+    }).catch(function(err) {
+        res.render("addEmployee", {departments: []});
+    });
 });
 
 //set up the '/images/add' route to respond to the following get request
