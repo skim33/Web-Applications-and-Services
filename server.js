@@ -98,9 +98,9 @@ app.get("/employees", function(req, res) {
     } else if(req.query.manager) {
         data_service.getEmployeesByManager(req.query.manager).then(function(data){
             if (data.length > 0) {
-                res.render("employees", {employees: data}).catch(function(err) {
+                res.render("employees", {employees: data});
             }
-        ).catch(function(err) {
+        }).catch(function(err) {
             res.render("employees", { message: "no results" });
         });
     } else {
