@@ -129,7 +129,7 @@ app.get("/employee/:empNum", function(req, res) {
      // initialize an empty object to store the values     
      let viewData = {}; 
  
-     data_service.getEmployeeByNum(req.params.empNum).then((data) => {         
+     data_service.getEmployeeByNum(req.params.employeeNum).then((data) => {         
         if (data) {             
              viewData.employee = data; //store employee data in the "viewData" object as "employee"         
         } else {             
