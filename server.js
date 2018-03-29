@@ -151,8 +151,8 @@ app.get("/employee/:empNum", function(req, res) {
     });
 });
 
-app.get("/employees/delete/:employeeNum", function(req, res) {
-    data_service.deleteEmployeeByNum(req.params.employeeNum).then(function() {
+app.get("/employees/delete/:empNum", function(req, res) {
+    data_service.deleteEmployeeByNum(req.params.empNum).then(function(data) {
         res.redirect("/employees");
     }).catch(function(err) {
         res.status(500).send("Unable to Remove Employee / Employee not found");
