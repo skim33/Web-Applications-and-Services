@@ -254,8 +254,8 @@ app.use(function(req, res) {
 
 app.listen(HTTP_PORT, function(res, req) {
     console.log('Express http server listening on: ' + HTTP_PORT);
-    data_service.initialize().then(function(data){
-        console.log(data);
+    data_service.initialize().then(function(){
+        console.log("server is initialized");
     }).catch(function(err){
         console.log(err);
     });

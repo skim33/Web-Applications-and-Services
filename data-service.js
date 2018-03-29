@@ -60,14 +60,11 @@ Department.hasMany(Employee);
 
 module.exports.initialize = function() {
     return new Promise(function(resolve, reject) {
-        sequelize.sync().then(function(Employee) {
-            resolve();
-        }).then(function(Department) {
-            resolve();
+        sequelize.sync().then(function() {
+            resolve("connected");
         }).catch((function(err) {
             reject("unable to sync the database");
         }));
-        reject();
     });
 }
 
