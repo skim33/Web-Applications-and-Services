@@ -26,6 +26,7 @@ sequelize.authenticate().then(function() {
 });
 
 const Employee = sequelize.define('Employee', {
+    tableName: 'Employee',
     employeeNum: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     firstName: Sequelize.STRING,
     lastName: Sequelize.STRING,
