@@ -104,7 +104,7 @@ module.exports.addEmployee = function(employeeData) {
                     employeeData[i] == null;
                 }
             }
-            resolve(Employee.create({
+            Employee.create({
                 employeeNum: employeeNum.employeeNum,
                 firstName: employeeData.firstName,
                 lastName: employeeData.lastName,
@@ -122,7 +122,7 @@ module.exports.addEmployee = function(employeeData) {
                 hireDate:employeeData.hireDate
             }).then(function() {
                 resolve(Employee);
-            })).catch(function() {
+            }).catch(function() {
                 reject("unable to create employee");
             });
         }).catch(function() {
@@ -196,7 +196,7 @@ module.exports.updateEmployee = function(employeeData) {
                     employeeData[i] == null;
                 }
             }
-            resolve(Employee.update({
+            Employee.update({
                 firstName: employeeData.firstName,
                 lastName: employeeData.lastName,
                 email: employeeData.email,
@@ -216,7 +216,7 @@ module.exports.updateEmployee = function(employeeData) {
                 }
             }).then(function() {
                 resolve(Employee);
-            })).catch(function() {
+            }).catch(function() {
                 reject("unable to create employee");
             });
         }).catch(function() {
