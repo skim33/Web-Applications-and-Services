@@ -174,7 +174,7 @@ app.get("/departments", function(req, res) {
             });
         }
     }).catch(function(err){
-        res.render("departmentd", {message: err});
+        res.render("department", {message: err});
     });
 });
 
