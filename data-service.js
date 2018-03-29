@@ -26,6 +26,7 @@ sequelize.authenticate().then(function() {
 });
 
 const Employee = sequelize.define('Employee', {
+    tableName: 'Employee',
     employeeNum: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     firstName: Sequelize.STRING,
     lastName: Sequelize.STRING,
@@ -47,6 +48,7 @@ const Employee = sequelize.define('Employee', {
 });
 
 const Department = sequelize.define("Department", {
+    tableName: 'Department',
     departmentId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     departmentName: Sequelize.STRING}, 
     {
@@ -113,10 +115,13 @@ module.exports.addEmployee = function(employeeData) {
                 email: employeeData.email,
                 SSN: employeeData.SSN,
                 addressStreet: employeeData.addressStreet,
+                addressCity: employeeData.addressCity,
                 addressState: employeeData.addressState,
                 addressPostal: employeeData.addressPostal,
+                maritalStatus: employeeData.maritalStatus,
                 isManager: employeeData.isManager,
                 employeeManagerNum: employeeData.employeeManagerNum,
+                status: employeeData.status,
                 department: employeeData.department,
                 hireDate:employeeData.hireDate
             }).then(function() {
