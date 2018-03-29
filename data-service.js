@@ -26,7 +26,6 @@ sequelize.authenticate().then(function() {
 });
 
 const Employee = sequelize.define('Employee', {
-    tableName: 'Employee',
     employeeNum: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     firstName: Sequelize.STRING,
     lastName: Sequelize.STRING,
@@ -41,19 +40,18 @@ const Employee = sequelize.define('Employee', {
     employeeManagerNum: Sequelize.INTEGER,
     status: Sequelize.STRING,
     department: Sequelize.INTEGER,
-    hireDate:Sequelize.STRING },
-    {
+    hireDate:Sequelize.STRING 
+},{
         createdAt: false,
         updatedAt: false
 });
 
 const Department = sequelize.define("Department", {
-    tableName: 'Department',
     departmentId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    departmentName: Sequelize.STRING}, 
+    departmentName: Sequelize.STRING }, 
     {
         createdAt: false,
-        updatedAt: false
+        updatedAt: false 
 });
 
 Department.hasMany(Employee);
