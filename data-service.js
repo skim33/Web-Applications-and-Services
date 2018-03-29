@@ -104,20 +104,21 @@ module.exports.addEmployee = function(employeeData) {
                 }
             }
             resolve(Employee.create({
-                employeeNum: employeeData.employeeNum,
+                employeeNum: employeeNum.employeeNum,
                 firstName: employeeData.firstName,
                 lastName: employeeData.lastName,
                 email: employeeData.email,
                 SSN: employeeData.SSN,
                 addressStreet: employeeData.addressStreet,
-                addresCity: employeeData.addresCity,
-                isManager: employeeData.isManager,
+                addressCity: employeeData.addressCity,
                 addressState: employeeData.addressState,
                 addressPostal: employeeData.addressPostal,
+                maritalStatus: employeeData.maritalStatus,
+                isManager: employeeData.isManager,
                 employeeManagerNum: employeeData.employeeManagerNum,
                 status: employeeData.status,
                 department: employeeData.department,
-                hireDate: employeeData.hireDate
+                hireDate:employeeData.hireDate
             })).catch(function() {
                 reject("unable to create employee");
             });
@@ -193,20 +194,20 @@ module.exports.updateEmployee = function(employeeData) {
                 }
             }
             resolve(Employee.create({
-                employeeNum: employeeData.employeeNum,
                 firstName: employeeData.firstName,
                 lastName: employeeData.lastName,
                 email: employeeData.email,
                 SSN: employeeData.SSN,
                 addressStreet: employeeData.addressStreet,
-                addresCity: employeeData.addresCity,
-                isManager: employeeData.isManager,
+                addressCity: employeeData.addressCity,
                 addressState: employeeData.addressState,
                 addressPostal: employeeData.addressPostal,
+                maritalStatus: employeeData.maritalStatus,
+                isManager: employeeData.isManager,
                 employeeManagerNum: employeeData.employeeManagerNum,
                 status: employeeData.status,
                 department: employeeData.department,
-                hireDate: employeeData.hireDate},
+                hireDate:employeeData.hireDate,
                 { where: {
                     employeeNum: employeeData.employeeNum
                 }
