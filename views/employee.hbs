@@ -46,7 +46,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="addressCity">Address (City):</label>
-                            <input class="form-control" id="addressCity" name="addressCity" type="text" value="{{viewData.employee.addresCity}}" />
+                            <input class="form-control" id="addressCity" name="addressCity" type="text" value="{{viewData.employee.addressCity}}" />
                         </div>
                     </div>
 
@@ -88,7 +88,7 @@
                     <div class="col-md-3">                         
                         <div class="form-group">                             
                             <label>Status:</label><br />  
-                                {{#equal viewData.employee.status "Full Time"}}
+                                {{#equal {{viewData.employee.status}} "Full Time"}}
                                     <label class="checkbox-inline">
                                         <input type="radio" name="status" value="Full Time" checked="" /> Full Time
                                     </label>
@@ -98,7 +98,7 @@
                                     </label class="checkbox-inline">
                                 {{/equal}}
 
-                                {{#equal viewData.employee.status "Part Time"}}
+                                {{#equal {{viewData.employee.status}} "Part Time"}}
                                     <label class="checkbox-inline">
                                         <input type="radio" name="status" value="Full Time"  /> Full Time
                                     </label>
