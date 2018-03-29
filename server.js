@@ -170,11 +170,11 @@ app.get("/departments", function(req, res) {
     data_service.getDepartments().then(function(data){
         if (data.length > 0) {
             res.render("departments", {departments: data}).catch(function(err) {
-                res.render("departments",{ message: "no results" });
+                res.render("department",{ message: "no results" });
             });
         }
     }).catch(function(err){
-        res.render({message: err});
+        res.render("departmentd", {message: err});
     });
 });
 
