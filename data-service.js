@@ -48,6 +48,7 @@ const Employee = sequelize.define('Employee', {
 });
 
 const Department = sequelize.define("Department", {
+    tableName: 'Department',
     departmentId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     departmentName: Sequelize.STRING}, {
         createdAt: false,
