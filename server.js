@@ -83,7 +83,7 @@ app.get("/employees", function(req, res) {
         data_service.getEmployeesByStatus(req.query.status).then(function(data){
             if (data.length > 0) {
                 res.render("employees", {employees: data}).catch(function(err) {
-                    res.render("employee",{ message: "no results" });
+                    res.render("employee", { message: "no results" });
                 });
             }
         }).catch(function(err) {
@@ -93,7 +93,7 @@ app.get("/employees", function(req, res) {
         data_service.getEmployeesByDepartment(req.query.department).then(function(data){
             if (data.length > 0) {
                 res.render("employees", {employees: data}).catch(function(err) {
-                    res.render("employee",{ message: "no results" });
+                    res.render("employee", { message: "no results" });
                 });
             }
         }).catch(function(err) {
@@ -103,7 +103,7 @@ app.get("/employees", function(req, res) {
         data_service.getEmployeesByManager(req.query.manager).then(function(data){
             if (data.length > 0) {
                 res.render("employees", {employees: data}).catch(function(err) {
-                    res.render("employee",{ message: "no results" });
+                    res.render("employee", { message: "no results" });
                 });
             }
         }).catch(function(err) {
@@ -112,7 +112,9 @@ app.get("/employees", function(req, res) {
     } else {
         data_service.getAllEmployees().then(function(data){
             if (data.length > 0) {
-                res.render("employees", {employees: data});
+                res.render("employees", {employees: data}).catch(function(err) {
+                    res.render("employee", { message: "no results" });
+                });
             }
         }).catch(function(err) {
             res.render({message: "no results"});
