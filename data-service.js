@@ -116,7 +116,7 @@ module.exports.addEmployee = function(employeeData) {
                 addressCity: employeeData.addressCity,
                 addressState: employeeData.addressState,
                 addressPostal: employeeData.addressPostal,
-                maritalStatus: employeeData.maritalStatus,
+                
                 isManager: employeeData.isManager,
                 employeeManagerNum: employeeData.employeeManagerNum,
                 status: employeeData.status,
