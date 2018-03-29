@@ -97,7 +97,6 @@ module.exports.getDepartments = function() {
 
 module.exports.addEmployee = function(employeeData) {
     employeeData.isManager = (employeeData.isManager) ? true : false;
-    console.log(employeeData.employeeNum);
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
             for(var i in employeeData) {
@@ -106,7 +105,7 @@ module.exports.addEmployee = function(employeeData) {
                 }
             }
             resolve(Employee.create({
-                employeeNum: employeeData.employeeNum,
+                employeeNum: employee.length,
                 firstName: employeeData.firstName,
                 lastName: employeeData.lastName,
                 email: employeeData.email,
