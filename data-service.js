@@ -120,6 +120,8 @@ module.exports.addEmployee = function(employeeData) {
                 status: employeeData.status,
                 department: employeeData.department,
                 hireDate:employeeData.hireDate
+            }).then(function() {
+                resolve(Employee);
             })).catch(function() {
                 reject("unable to create employee");
             });
@@ -212,6 +214,8 @@ module.exports.updateEmployee = function(employeeData) {
                 { where: {
                     employeeNum: employeeData.employeeNum
                 }
+            }).then(function() {
+                resolve(Employee);
             })).catch(function() {
                 reject("unable to create employee");
             });
