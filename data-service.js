@@ -207,7 +207,7 @@ module.exports.updateEmployee = function(employeeData) {
                 employeeManagerNum: employeeData.employeeManagerNum,
                 status: employeeData.status,
                 department: employeeData.department,
-                hireDate:employeeData.hireDate,
+                hireDate:employeeData.hireDate },
                 { where: {
                     employeeNum: employeeData.employeeNum
                 }
