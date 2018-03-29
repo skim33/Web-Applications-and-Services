@@ -120,12 +120,7 @@ module.exports.addEmployee = function(employeeData) {
                 status: employeeData.status,
                 department: employeeData.department,
                 hireDate:employeeData.hireDate
-            })).then(function(employee) {
-                console.log(employee.get({
-                    plain:true
-                }))
-
-            }).catch(function() {
+            })).catch(function() {
                 reject("unable to create employee");
             });
         }).catch(function() {
@@ -199,7 +194,7 @@ module.exports.updateEmployee = function(employeeData) {
                     employeeData[i] == null;
                 }
             }
-            resolve(Employee.create({
+            resolve(Employee.update({
                 firstName: employeeData.firstName,
                 lastName: employeeData.lastName,
                 email: employeeData.email,
