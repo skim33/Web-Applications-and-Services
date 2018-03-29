@@ -151,7 +151,7 @@ app.get("/employee/:empNum", function(req, res) {
     });
 });
 
-app.get("/employees/delete/:empNum", function(req, res) {
+app.get("/employees/delete/:employeeNum", function(req, res) {
     data_service.deleteEmployeeByNum(req.params.employeeNum).then(function() {
         res.redirect("/employees");
     }).catch(function(err) {
