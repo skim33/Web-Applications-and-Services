@@ -69,7 +69,9 @@ module.exports.initialize = function() {
 module.exports.getAllEmployees = function() {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
-            resolve(Employee.findAll());
+            Employee.findAll().then(function(data) {
+                resolve(data);
+            })
         }).catch(function(err) {
             reject("no results returned");
         });
