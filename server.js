@@ -232,22 +232,7 @@ app.get("/images", function(req, res) {
 
 //set up the '/employees/add' route to respond to the following post request
 app.post("/employees/add", function(req, res) {
-    var data = {};
-    data.firstName = req.body.firstName;
-    data.lastName = req.body.lastName;
-    data.email = req.body.email;
-    data.SSN = req.body.SSN;
-    data.addressStreet = req.body.addressStreet;
-    data.addressCity = req.body.addressCity;
-    data.addressState = req.body.addressState;
-    data.addressPostal = req.body.addressPostal;
-    data.isManager = req.body.isManager;
-    data.employeeManagerNum = req.body.employeeManagerNum;
-    data.status = req.body.status;
-    data.department = req.body.department;
-    data.hireDate = req.body.hireDate;
-
-    data_service.addEmployee(data).then(function(){
+    data_service.addEmployee(req.body).then(function(data){
         res.redirect("/employees");
     }).catch(function (err) {
         res.json({message: err});
@@ -255,8 +240,7 @@ app.post("/employees/add", function(req, res) {
 });
 
 //set up the '/employee/update' route to respond to the following post request
-app.post("/employee/update", function(req, res) {
-    console.log(req.body);         
+app.post("/employee/update", function(req, res) {         
     data_service.updateEmployee(req.body).then(function() {
         res.redirect("/employees");
     }).catch(function(err) {
