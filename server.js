@@ -172,11 +172,11 @@ app.get("/departments", function(req, res) {
     data_service.getDepartments().then(function(data){
         if (data.length > 0) {
             res.render("departments", {departments: data}).catch(function(err) {
-                res.render("department",{ message: "no results" });
+                res.render("departments",{ message: "no results" });
             });
         }
     }).catch(function(err){
-        res.render("department", {message: err});
+        res.render("departments", {message: err});
     });
 });
 
