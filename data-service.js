@@ -48,7 +48,8 @@ const Employee = sequelize.define('Employee', {
 
 const Department = sequelize.define("Department", {
     departmentId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    departmentName: Sequelize.STRING}, {
+    departmentName: Sequelize.STRING}, 
+    {
         createdAt: false,
         updatedAt: false
 });
@@ -119,7 +120,12 @@ module.exports.addEmployee = function(employeeData) {
                 status: employeeData.status,
                 department: employeeData.department,
                 hireDate:employeeData.hireDate
-            })).catch(function() {
+            })).then(function(employee) {
+                console.log(employee.get({
+                    plain:true
+                }))
+
+            }).catch(function() {
                 reject("unable to create employee");
             });
         }).catch(function() {
@@ -235,7 +241,7 @@ module.exports.addDepartment = function(departmentData) {
                 resolve(Department);
             }).catch(function(err) {
                 reject("unable to create department");
-            })
+            });
         }).catch(function() {
             reject("unable to create department");
         });
