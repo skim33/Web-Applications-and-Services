@@ -87,7 +87,7 @@ app.get("/employees", function(req, res) {
                 });
             }
         }).catch(function(err) {
-            res.render({message: "no results"});
+            res.render("employees", { message: "no results" });
         });
     } else if(req.query.department) {
         data_service.getEmployeesByDepartment(req.query.department).then(function(data){
@@ -97,7 +97,7 @@ app.get("/employees", function(req, res) {
                 });
             }
         }).catch(function(err) {
-            res.render({message: "no results"});
+            res.render("employees", { message: "no results" });
         });
     } else if(req.query.manager) {
         data_service.getEmployeesByManager(req.query.manager).then(function(data){
@@ -107,7 +107,7 @@ app.get("/employees", function(req, res) {
                 });
             }
         }).catch(function(err) {
-            res.render({message: "no results"});
+            res.render("employees", { message: "no results" });
         });
     } else {
         data_service.getAllEmployees().then(function(data){
@@ -117,7 +117,7 @@ app.get("/employees", function(req, res) {
                 });
             }
         }).catch(function(err) {
-            res.render({message: "no results"});
+            res.render("employees", { message: "no results" });
         });
     }
 });
