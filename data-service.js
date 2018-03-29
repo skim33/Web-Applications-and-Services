@@ -113,13 +113,10 @@ module.exports.addEmployee = function(employeeData) {
                 email: employeeData.email,
                 SSN: employeeData.SSN,
                 addressStreet: employeeData.addressStreet,
-                addressCity: employeeData.addressCity,
                 addressState: employeeData.addressState,
                 addressPostal: employeeData.addressPostal,
-                maritalStatus: employeeData.maritalStatus,
                 isManager: employeeData.isManager,
                 employeeManagerNum: employeeData.employeeManagerNum,
-                status: employeeData.status,
                 department: employeeData.department,
                 hireDate:employeeData.hireDate
             }).then(function() {
