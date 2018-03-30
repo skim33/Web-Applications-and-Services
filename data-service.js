@@ -57,7 +57,7 @@ const Department = sequelize.define("Department", {
 module.exports.initialize = function() {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
-            resolve("connected");
+            resolve("able to sync the database");
         }).catch(function(err) {
             reject("unable to sync the database");
         });
@@ -203,7 +203,7 @@ module.exports.updateEmployee = function(employeeData) {
     if (employeeData.isManager == false) {
         employeeData.employeeManagerNum = null;
     }
-    
+
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
             for(var i in employeeData) {
