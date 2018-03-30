@@ -126,11 +126,11 @@ app.get("/employees/add", function(req, res) {
 });
 
 app.get("/employee/:empNum", function(req, res) {
-     // initialize an empty object to store the values     
-     let viewData = {}; 
+    // initialize an empty object to store the values     
+    let viewData = {};
  
-     data_service.getEmployeeByNum(req.params.empNum).then((data) => {
-        if (data) {             
+    data_service.getEmployeeByNum(req.params.empNum).then((data) => {
+        if (data) {           
              viewData.data = data; //store employee data in the "viewData" object as "employee"         
         } else {             
             viewData.data = null; // set employee to null if none were returned         
@@ -146,7 +146,7 @@ app.get("/employee/:empNum", function(req, res) {
      // viewData.departments object 
 
         for (let i = 0; i < viewData.departments.length; i++) {             
-            if (viewData.departments[i].departmentId == viewData.viewData.data[0].department) {                 
+            if (viewData.departments[i].departmentId == viewData.data[0].department) {                 
             viewData.departments[i].selected = true;             
             }         
         } 
@@ -157,13 +157,13 @@ app.get("/employee/:empNum", function(req, res) {
         if (viewData.data == null) { // if no employee - return an error             
             res.status(404).send("Employee Not Found");         
         } else { 
-        res.render("employee", { viewData: viewData }); // render the "employee" view         
+            res.render("employee", { viewData: viewData }); // render the "employee" view         
         }     
     });
 });
 
-app.get("/employees/delete/:empNum", function(req, res) {
-    data_service.deleteEmployeeByNum(req.params.employeeNum).then(function(data) {
+app.get("/employee/delete/:empNum", function(req, res) {
+    data_service.deleteEmployeeByNum(req.params.empNum).then(function(data) {
         res.redirect("/employees");
     }).catch(function(err) {
         res.status(500).send("Unable to Remove Employee / Employee not found");

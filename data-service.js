@@ -189,7 +189,7 @@ module.exports.getEmployeeByNum = function(num) {
                     employeeNum: num
                 }
             }).then(function(data) {
-                resolve(data);
+                resolve(data[0]);
             });
         }).catch(function(err) {
             reject("no results returned");
