@@ -54,8 +54,6 @@ const Department = sequelize.define("Department", {
         updatedAt: false 
 });
 
-Department.hasMany(Employee);
-
 module.exports.initialize = function() {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
@@ -99,6 +97,9 @@ module.exports.getDepartments = function() {
 
 module.exports.addEmployee = function(employeeData) {
     employeeData.isManager = (employeeData.isManager) ? true : false;
+    if (employeeData.isManager == false) {
+        employeeData.employeeManagerNum = null;
+    }
 
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
@@ -199,6 +200,10 @@ module.exports.getEmployeeByNum = function(num) {
 
 module.exports.updateEmployee = function(employeeData) {
     employeeData.isManager = (employeeData.isManager) ? true : false;
+    if (employeeData.isManager == false) {
+        employeeData.employeeManagerNum = null;
+    }
+    
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(function() {
             for(var i in employeeData) {
