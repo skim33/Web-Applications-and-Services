@@ -129,14 +129,14 @@ app.get("/employee/:empNum", function(req, res) {
      // initialize an empty object to store the values     
      let viewData = {}; 
  
-     data_service.getEmployeeByNum(req.params.employeeNum).then((data) => {         
+     data_service.getEmployeeByNum(req.params.empNum).then((data) => {
         if (data) {             
-             viewData.employee = data; //store employee data in the "viewData" object as "employee"         
+             viewData.data = data; //store employee data in the "viewData" object as "employee"         
         } else {             
-            viewData.employee = null; // set employee to null if none were returned         
+            viewData.data = null; // set employee to null if none were returned         
         }     
     }).catch(() => {         
-        viewData.employee = null; // set employee to null if there was an error      
+        viewData.data = null; // set employee to null if there was an error      
     }).then(data_service.getDepartments)     
     .then((data) => {         
         viewData.departments = data; // store department data in the "viewData" object as "departments" 
@@ -146,15 +146,15 @@ app.get("/employee/:empNum", function(req, res) {
      // viewData.departments object 
 
         for (let i = 0; i < viewData.departments.length; i++) {             
-            if (viewData.departments[i].departmentId == viewData.employee.department) {                 
+            if (viewData.departments[i].departmentId == viewData.viewData.data[0].department) {                 
             viewData.departments[i].selected = true;             
             }         
         } 
 
-    }).catch(() => {         
+    }).catch(() => {       
         viewData.departments = []; // set departments to empty if there was an error     
     }).then(() => {         
-        if (viewData.employee == null) { // if no employee - return an error             
+        if (viewData.data == null) { // if no employee - return an error             
             res.status(404).send("Employee Not Found");         
         } else { 
         res.render("employee", { viewData: viewData }); // render the "employee" view         
@@ -163,7 +163,7 @@ app.get("/employee/:empNum", function(req, res) {
 });
 
 app.get("/employees/delete/:empNum", function(req, res) {
-    data_service.deleteEmployeeByNum(req.params.empNum).then(function(data) {
+    data_service.deleteEmployeeByNum(req.params.employeeNum).then(function(data) {
         res.redirect("/employees");
     }).catch(function(err) {
         res.status(500).send("Unable to Remove Employee / Employee not found");
@@ -189,7 +189,7 @@ app.get("/departments/add", function(req, res) {
 
 app.get("/department/:departmentId", function(req, res) {
     data_service.getDepartmentById(req.params.departmentId).then(function(data){
-        res.render("department", {department: data});
+        res.render("department", {data: data});
     }).catch(function(err) {
         res.status(404).send("Department Not Found");
     });
