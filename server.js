@@ -14,7 +14,9 @@
 var express = require("express");
 var path = require("path");
 var data_service = require("./data-service.js");
+var dataServiceAuth = require("./data-service-auth.js");
 var multer = require("multer");
+var clientSessions = require("client-sessions");
 var fs = require("fs");
 var bodyParser = require("body-parser");
 var exphbs = require("express-handlebars");
@@ -67,6 +69,30 @@ app.engine('.hbs', exphbs({
 
 app.set('view engine', '.hbs');
 
+app.use(express.static("public"));
+
+app.use(clientSessions({
+    cookieName: "session", // this is the object name that will be added to 'req'
+    secret: "web322_a6", // this should be a long un-guessable string.
+    duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
+    activeDuration: 1000 * 60 // the session will be extended by this many ms each request (1 minute)
+}));
+  
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(function(req, res, next) {   
+    res.locals.session = req.session;   
+    next(); 
+});
+
+function ensureLogin(req, res, next) {
+    if (!req.session.user) {
+      res.redirect("/login");
+    } else {
+      next();
+    }
+}
+
 //set up the default '/' route to respond to the following get request 
 app.get("/", function(req, res) {
     res.render("home");
@@ -78,7 +104,7 @@ app.get("/about", function(req, res) {
 });
 
 //set up the '/employees' route to respond to the following get request
-app.get("/employees", function(req, res) {
+app.get("/employees", ensureLogin, function(req, res) {
     if(req.query.status) {
         data_service.getEmployeesByStatus(req.query.status).then(function(data){
             if (data.length > 0) {
@@ -117,7 +143,7 @@ app.get("/employees", function(req, res) {
 });
 
 //set up the '/employees/add' route to respond to the following get request
-app.get("/employees/add", function(req, res) {
+app.get("/employees/add",  ensureLogin, function(req, res) {
     data_service.getDepartments().then(function(data) {
         res.render("addEmployee", {departments:data});
     }).catch(function(err) {
@@ -125,7 +151,7 @@ app.get("/employees/add", function(req, res) {
     });
 });
 
-app.get("/employee/:empNum", function(req, res) {
+app.get("/employee/:empNum", ensureLogin, function(req, res) {
     // initialize an empty object to store the values     
     let viewData = {};
  
@@ -162,7 +188,7 @@ app.get("/employee/:empNum", function(req, res) {
     });
 });
 
-app.get("/employee/delete/:empNum", function(req, res) {
+app.get("/employee/delete/:empNum", ensureLogin, function(req, res) {
     data_service.deleteEmployeeByNum(req.params.empNum).then(function(data) {
         res.redirect("/employees");
     }).catch(function(err) {
@@ -171,7 +197,7 @@ app.get("/employee/delete/:empNum", function(req, res) {
 });
 
 //set up the '/departments' route to respond to the following get request
-app.get("/departments", function(req, res) {
+app.get("/departments", ensureLogin, function(req, res) {
     data_service.getDepartments().then(function(data){
         if (data.length > 0) {
             res.render("departments", {departments: data});
@@ -183,11 +209,11 @@ app.get("/departments", function(req, res) {
     });
 });
 
-app.get("/departments/add", function(req, res) {
+app.get("/departments/add", ensureLogin, function(req, res) {
     res.render("addDepartment");
 });
 
-app.get("/department/:departmentId", function(req, res) {
+app.get("/department/:departmentId", ensureLogin, function(req, res) {
     data_service.getDepartmentById(req.params.departmentId).then(function(data){
         res.render("department", {data: data});
     }).catch(function(err) {
@@ -196,7 +222,7 @@ app.get("/department/:departmentId", function(req, res) {
 });
 
 //set up the '/images' route to respond to the following get request
-app.get("/images", function(req, res) {
+app.get("/images", ensureLogin, function(req, res) {
     fs.readdir(dir, function (err, items){
         var someData = {
             images: images
@@ -207,12 +233,12 @@ app.get("/images", function(req, res) {
 });
 
 //set up the '/images/add' route to respond to the following get request
-app.get("/images/add", function(req, res) {
+app.get("/images/add", ensureLogin, function(req, res) {
     res.render("addImage");
 });
 
 //set up the '/employees/add' route to respond to the following post request
-app.post("/employees/add", function(req, res) {
+app.post("/employees/add", ensureLogin, function(req, res) {
     data_service.addEmployee(req.body).then(function(data){
         res.redirect("/employees");
     }).catch(function (err) {
@@ -221,7 +247,7 @@ app.post("/employees/add", function(req, res) {
 });
 
 //set up the '/employee/update' route to respond to the following post request
-app.post("/employee/update", function(req, res) {         
+app.post("/employee/update", ensureLogin, function(req, res) {         
     data_service.updateEmployee(req.body).then(function() {
         res.redirect("/employees");
     }).catch(function(err) {
@@ -229,7 +255,7 @@ app.post("/employee/update", function(req, res) {
     });
 });
 
-app.post("/departments/add", function(req, res) {
+app.post("/departments/add", ensureLogin, function(req, res) {
     data_service.addDepartment(req.body).then(function(data) {
         res.redirect("/departments");
     }).catch(function(err) {
@@ -237,7 +263,7 @@ app.post("/departments/add", function(req, res) {
     });
 });
 
-app.post("/department/update", function(req, res) {
+app.post("/department/update", ensureLogin, function(req, res) {
     console.log(req.body);         
     data_service.updateDepartment(req.body).then(function() {
         res.redirect("/departments");
@@ -247,9 +273,48 @@ app.post("/department/update", function(req, res) {
 });
 
 //set up the '/images/add' route to respond to the following post request
-app.post("/images/add", upload.single("imageFile"), function(req, res) {
+app.post("/images/add", upload.single("imageFile"), ensureLogin, function(req, res) {
     images.push(req.file.filename);
     res.redirect("/images");
+});
+
+app.get("/login", function(req, res) {
+    res.render("login");
+});
+
+app.get("/register", function(req, res) {
+    res.render("register");
+});
+
+app.post("/register", function(req, res) {
+    dataServiceAuth.registerUser(req.body).then(function() {
+        res.render("register", {successMessage: "User created"});
+    }).catch(function(err) {
+        res.render("register", {errorMessage: err, userName: req.body.userName});
+    });
+});
+
+app.post("/login", function(req, res) {
+    req.body.userAgent = req.get('User-Agent');
+    dataServiceAuth.checkUser(req.body).then((user) => {     
+        req.session.user = {         
+            userName: user.userName,// authenticated user's userName         
+            email: user.email,// authenticated user's email         
+            loginHistory: user.loginHistory// authenticated user's loginHistory     
+        } 
+        res.redirect('/employees'); 
+    }).catch(function(err) {
+        res.render("login", {errorMessage: err, userName: req.body.userName});
+    });
+});
+
+app.get("/logout", function(req, res) {
+    req.session.reset();
+    res.redirect('/');
+});
+
+app.get("/userHistory", function(req, res) {
+    res.render("userHistory");
 });
 
 app.use(function(req, res) {
@@ -257,11 +322,14 @@ app.use(function(req, res) {
 });
 
 app.listen(HTTP_PORT, function(res, req) {
-    console.log('Express http server listening on: ' + HTTP_PORT);
-    data_service.initialize().then(function(){
-        console.log("server is initialized");
-    }).catch(function(err){
-        console.log(err);
-    });
+    data_service.initialize()
+    .then(dataServiceAuth.initialize)
+    .then(function() {
+        app.listen(HTTP_PORT, function(){
+            console.log("app listening on: " + HTTP_PORT)     
+        }); 
+    }).catch(function(err){     
+        console.log("unable to start server: " + err); 
+    }); 
 });
 
