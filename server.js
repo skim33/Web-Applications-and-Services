@@ -321,15 +321,14 @@ app.use(function(req, res) {
     res.status(404).send("Page Not Found");
 });
 
-app.listen(HTTP_PORT, function(res, req) {
-    data_service.initialize()
-    .then(dataServiceAuth.initialize)
-    .then(function() {
-        app.listen(HTTP_PORT, function(){
-            console.log("app listening on: " + HTTP_PORT)     
-        }); 
-    }).catch(function(err){     
-        console.log("unable to start server: " + err); 
+
+data_service.initialize()
+.then(dataServiceAuth.initialize)
+.then(function() {
+    app.listen(HTTP_PORT, function(){
+        console.log("app listening on: " + HTTP_PORT)     
     }); 
-});
+}).catch(function(err){     
+    console.log("unable to start server: " + err); 
+}); 
 

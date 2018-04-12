@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+const bcrypt = require('bcryptjs'); 
+
 var userSchema = new Schema({
     userName: {
         type: String,
@@ -12,7 +14,7 @@ var userSchema = new Schema({
 
 let User; //to be defined on new connection
 
-var dbURL = "mongodb://<dbuser>:<dbpassword>@ds243049.mlab.com:43049/web322_a6";
+var dbURL = "mongodb://wkim33:zwc0127W@ds243049.mlab.com:43049/web322_a6";
 
 module.exports.initialize = function () {     
     return new Promise(function (resolve, reject) {         
@@ -34,38 +36,57 @@ module.exports.registerUser = (userData) => {
             reject("Passwords do not match");
         }
 
-        let newUser = new User(userData);
-        newUser.save((err) => {
-            if(err) {
-                if (err.code == 11000) {
-                    reject("User Name already taken");
-                } else {
-                    reject("There was an error creating the user: " + err);
+        bcrypt.genSalt(10, function(err, salt) { // Generate a "salt" using 10 rounds     
+            bcrypt.hash(userData.password, salt, function(err, hash) { // encrypt the password: userData.password        
+                // TODO: Store the resulting "hash" value in the DB
+                userData.password = hash;
+                let newUser = new User(userData);
+                newUser.save((err) => {
+                    if(err) {
+                        if (err.code == 11000) {
+                            reject("User Name already taken");
+                        } else {
+                            reject("There was an error creating the user: " + err);
+                        }
+                    }
+                    resolve();
+                });
+
+                if (err) {
+                    reject("There was an error encrypting the password");
                 }
+            }); 
+
+            if (err) {
+                reject("There was an error encrypting the password");
             }
         });
-        resolve();
     });
 }
 
 module.exports.checkUser = (userData) => {
     return new Promise((resolve, reject) => {
-        User.find({user: userData.userName}).exec().then((user) => {
-            if (users == null) {
-                reject("Unable to find user: " + userData.userName);
-            } else if (users[0].password != userData.password) {
-                reject("Incorrect Password for user: " + userData.userName);
-            } else {
-                users[0].loginHistory.push({dateTime: (new Date()).toString(), userAgent: userData.userAgent});
-                User.update({ userName: users[0].userName},
-                    { $set: { loginHistory: users[0].loginHistory } } 
-                ).exec().catch((err) => {
+        User.find({ userName: userData.userName }).exec().then((users) => {
+            
+            bcrypt.compare(userData.password, users[0].password).then((res) => {    
+                // res === true if it matches and res === false if it does not match
+                if (res === true) {
+                    users[0].loginHistory.push({dateTime: (new Date()).toString(), userAgent: userData.userAgent});
+                    User.update(
+                        { userName: users[0].userName},
+                        { $set: { loginHistory: users[0].loginHistory } 
+                    }).exec().catch((err) => {
+                        reject("There was an error verifying the user: " + err);
+                    });
+                    
+                    resolve(users[0]);
+                } else {
                     reject("There was an error verifying the user: " + err);
-                });
-                resolve(users[0]);
-            }
+                }
+            });
+
         }).catch((err) => {
-            reject("Unablet to find user: " + userData.user);
-        })
-    })
+            reject("Unablet to find user: " + userData.userName);
+        });
+    });
 }
